@@ -1,0 +1,276 @@
+/* ----
+
+# KStart
+# By: Dreamer-Paul
+# Last Update: 2020.5.18
+
+一个简洁不失细节的起始页
+
+本代码为奇趣保罗原创，并遵守 MIT 开源协议。欢迎访问我的博客：https://paugram.com
+
+---- */
+
+:root{
+    --shadow: 0 0 5em rgba(0, 0, 0, .1);
+    --shadow-thin: 0 0 1em rgba(0, 0, 0, .3);
+    --shadow-thick: 0 0 5em rgba(0, 0, 0, .2);
+}
+
+html, body{
+    height: 100%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    background: bottom right/60% no-repeat fixed;
+}
+
+.iconfont{
+    font: inherit;
+}
+
+h3{
+    font-weight: lighter;
+}
+
+article h3{ margin-top: 2em }
+article h3:first-child{ margin-top: 0 }
+
+article img{ border-radius: 1em }
+
+header{
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    position: fixed;
+    justify-content: flex-end;
+}
+
+header .about-btn, header .setting-btn{
+    padding: 1em;
+    cursor: pointer;
+    padding-bottom: 0;
+}
+header .about-btn:hover .fa, header .setting-btn:hover .fa{
+    transform: scale(1.2);
+}
+
+header .fa{
+    font-size: 1.5em;
+    transition: transform .3s;
+}
+
+main{
+    width: 100%;
+    margin: auto;
+    padding: 4em 1em;
+    max-width: 60em;
+}
+
+.input-box{
+    display: flex;
+    position: relative;
+    padding: .5em 1em;
+    border-radius: 3em;
+    background: #fff;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
+    box-shadow: var(--shadow);
+    transition: box-shadow .3s;
+}
+.input-box:hover{
+    box-shadow: var(--shadow-thick);
+}
+
+.input-box input{
+    flex: 1 1 auto;
+    max-width: 100%;
+    border-radius: 0;
+    border: none;
+    margin: 0 1em;
+}
+
+.navi-items{
+    display: grid;
+    grid-gap: 2em;
+    text-align: center;
+    grid-template-columns: repeat(auto-fill, minmax(5em, 1fr));
+}
+
+@media screen and (max-width: 768px){
+    .navi-items{
+        grid-gap: 1em;
+        grid-template-columns: repeat(auto-fill, minmax(4em, 1fr));
+    }
+}
+
+.navi-items .item{
+    color: inherit;
+    display: block;
+}
+
+.navi-search{
+    margin-bottom: 5em;
+}
+
+.search-select{
+    cursor: pointer;
+}
+
+.search-select .iconfont{
+    font-size: 1.5em;
+    line-height: 2.5rem;
+}
+
+.search-selector{
+    top: 3em;
+    opacity: 0;
+    padding: .75em 0;
+    overflow: hidden;
+    visibility: hidden;
+    position: absolute;
+    background: #fff;
+    border-radius: 1em;
+    box-shadow: var(--shadow);
+    transform: scale(1, 0);
+    transform-origin: top center;
+    transition: opacity .3s, transform .3s, visibility .3s;
+}
+
+.search-selector.active{
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+.search-selector .item{
+    cursor: pointer;
+    padding: .5em 1em;
+    transition: color .3s, background .3s;
+}
+.search-selector .item:hover{
+    color: #fff;
+    background: #3498db;
+}
+
+.navi-icon{
+    width: 5rem;
+    height: 5rem;
+    line-height: 5rem;
+    color: #fff;
+    background: #666;
+    font-size: 1.5em;
+    border-radius: 2em;
+    margin: auto;
+    overflow: hidden;
+    transition: box-shadow .3s;
+}
+.navi-icon:hover{
+    box-shadow: var(--shadow-thin);
+}
+.navi-icon img{ vertical-align: top }
+
+.navi-title{
+    color: #666;
+    font-size: .875em;
+    margin-top: .5em;
+    text-shadow: 0 0 5px #fff;
+}
+
+@media screen and (max-width: 768px){
+    .navi-icon{
+        width: 4rem;
+        height: 4rem;
+        line-height: 4rem;
+    }
+}
+
+footer{
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: #999;
+    padding: 1em 0;
+    position: fixed;
+    font-size: .875em;
+    text-align: center;
+}
+
+footer a{
+    color: inherit;
+}
+
+@media screen and (max-width: 600px){
+    footer{
+        position: static;
+    }
+}
+
+window{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    z-index: 1;
+    display: flex;
+    overflow: auto;
+    position: fixed;
+    padding: 2em 1em;
+    /*visibility: hidden;*/
+    pointer-events: none;
+    background: rgba(0, 0, 0, .2);
+    transition: opacity .3s;
+}
+window::-webkit-scrollbar{ width: 0 }
+
+window.active{
+    opacity: 1;
+    /*visibility: visible;*/
+    pointer-events: auto;
+}
+
+.the-window{
+    margin: auto;
+    display: none;
+    min-width: 15em;
+    max-width: 40em;
+    background: #fff;
+    border-radius: 1em;
+    box-shadow: var(--shadow-thick);
+}
+.the-window.active{
+    display: block;
+    animation: fade-small-large .3s forwards;
+    
+}
+.the-window.closed{
+    animation: fade-large-small .3s forwards;
+}
+
+.the-window .window-head{
+    padding: 1em 1.5em;
+    text-align: center;
+    position: relative;
+    box-shadow: var(--shadow);
+}
+.the-window .window-head button{
+    top: 1rem;
+    right: 1rem;
+    position: absolute;
+
+    border: none;
+    color: #fff;
+    padding: 0;
+    width: 1.5em;
+    cursor: pointer;
+    font-size: 1.17em;
+    border-radius: 1em;
+    background: rgb(255, 86, 86);
+}
+
+.the-window .window-body{
+    padding: 1.5em;
+}

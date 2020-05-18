@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-hans" class="font-auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奇趣起始页</title>
+    <link rel="icon" href="static/icon.png" sizes="192x192"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Dreamer-Paul/Kico-Style/kico.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1809713_7g0wlrwy3lw.css">
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="static/main.css">
+</head>
+<body>
+<header>
+    <div class="about-btn" ks-tag="bottom" ks-text="关于">
+        <i class="fa fa-info-circle"></i>
+    </div>
+    <div class="setting-btn" ks-tag="bottom" ks-text="设置">
+        <i class="fa fa-cog"></i>
+    </div>
+</header>
+<main>
+    <section class="navi-search">
+        <form class="input-box">
+            <div class="search-select" title="切换搜索引擎">
+                <div class="iconfont icon-baidu"></div>
+            </div>
+            <div class="search-selector"></div>
+            <input type="text" placeholder="搜索..."/>
+            <button class="btn" title="搜索"><i class="fa fa-search"></i></button>
+        </form>
+    </section>
+    <section class="navi-items"></section>
+</main>
+<footer>
+    <p>© 2020 <a href="https://paul.ren" target="_blank">奇趣保罗</a> | <a href="https://github.com/Dreamer-Paul/KStart" target="_blank">参与维护</a></p>
+</footer>
+<window>
+    <section class="the-window about">
+        <div class="window-head">
+            <button>×</button>
+            <h3>关于本项目</h3>
+        </div>
+        <div class="window-body">
+            <article>
+                <p><img src="static/about.jpg" alt="关于奇趣起始页"></p>
+                <p>欢迎使用奇趣起始页！本项目建设于 2020/5/9，是一个主打社区形式的开源项目。</p>
+                <p>它的使用方式很简单，只需要在 <a href="https://github.com/Dreamer-Paul/KStart-Sites" target="_blank">本项目的仓库</a> 上提交 PR，即可创造一个属于自己的导航页面。访问它只需要一个 URL 后缀即可直达，无需注册和登录，非常方便易用。</p>
+                <p>现有的类似站点已经很多了，为什么我仍然选择编写了这个项目？这是因为它们都是闭源的私人项目，只有作者本人才可以进行维护。</p>
+                <p>与此同时，这些站点的导航项大多已经预设。想要修改它们，要么需要注册后修改，要么就干脆不给改，个人觉得略显鸡肋。如果你更换了电脑，不就需要重新登录了吗？</p>
+                <p>介于采用 GitHub 托管的形式，本站属于“无后端”项目，一些可以提升用户体验的功能需要借助后端才能完成，我暂时没有去实现它。</p>
+                <h3>参照了：</h3>
+                <ul>
+                    <li><a href="https://www.chainwon.com" target="_blank" rel="nofollow">轻婉起始页</a></li>
+                    <li><a href="https://a.maorx.cn" target="_blank" rel="nofollow">青柠起始页</a></li>
+                </ul>
+                <h3>使用的项目：</h3>
+                <ul>
+                    <li><a href="https://www.iconfont.cn" target="_blank" rel="nofollow">IconFont</a></li>
+                    <li><a href="https://github.com/Dreamer-Paul/Kico-Style" target="_blank" rel="nofollow">Kico Style</a></li>
+                    <li><a href="https://fontawesome.com" target="_blank" rel="nofollow">FontAwesome</a></li>
+                </ul>
+            </article>
+        </div>
+    </section>
+    <section class="the-window setting">
+        <div class="window-head">
+            <button>×</button>
+            <h3>设置</h3>
+        </div>
+        <div class="window-body">
+            <fieldset>
+                <label>
+                    <span>默认搜索引擎：</span>
+                    <select name="search"></select>
+                </label>
+                <label>
+                    <span>启用随机背景：</span>
+                    <input type="checkbox" class="switch" name="background">
+                </label>
+                <label>
+                    <span>可选的预设导航项</span>
+                    <select multiple name="sites"></select>
+                </label>
+                <label>
+                    <span>自定义导航项目：</span>
+                    <textarea name="custom" rows="6"></textarea>
+                </label>
+                <p>
+                    <button class="btn small blue" name="reset">清除本地配置</button>
+                    <button class="btn small" name="output">导出</button>
+                </p>
+            </fieldset>
+        </div>
+    </section>
+</window>
+
+<script src="https://cdn.jsdelivr.net/gh/Dreamer-Paul/Kico-Style/kico.js"></script>
+<script src="static/main.js"></script>
+
+</body>
+</html>
