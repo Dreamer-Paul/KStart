@@ -213,7 +213,6 @@ var methods = {
             }
 
             if(type !== "options"){
-                console.log(obj.settings[item]);
                 obj.settings[item][type] = set[item];
 
                 obj.settings[item].onchange = function (ev) {
@@ -280,7 +279,7 @@ obj.settingBtn.reset.onclick = methods.clear;
 obj.settingBtn.output.onclick = methods.output;
 
 // 初始化
-fetch("https://dreamer-paul.github.io/KStart-Sites/site.json").then(res => res.json()).then((res) => {
+fetch("site.json").then(res => res.json()).then((res) => {
     data.sites = res;
 }).then(() => {
     var url = "https://dreamer-paul.github.io/KStart-Sites/" + (methods.getUser() ? methods.getUser() : "default") + ".json";
