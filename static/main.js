@@ -41,6 +41,21 @@ var obj = {
 var data = {
     timer: "",
     window: 0,
+    back_method: [
+        {
+            "name": "无背景"
+        },
+        {
+            "name": "随机动漫壁纸",
+            "url": "https://api.paugram.com/wallpaper?source=gt",
+            "set": "bottom right/60% no-repeat"
+        },
+        {
+            "name": "必应每日壁纸",
+            "url": "https://api.paugram.com/bing",
+            "set": "center/cover no-repeat"
+        }
+    ],
     search_method: [
         {
             "name": "百度",
@@ -70,7 +85,7 @@ var data = {
     ],
     user: {
         search: 0,
-        background: false,
+        background: 0,
         sites: [],
         custom: []
     }
@@ -94,13 +109,15 @@ var methods = {
         }
 
         localStorage.setItem("paul-navi", JSON.stringify(data.user));
+
+        ks.notice("设置已保存至本地！", {color: "green", time: 3000});
     },
     clear: function () {
         localStorage.clear("paul-navi");
-        ks.notice("本地设置已清除，刷新页面后将读取默认配置", {color: "green", time: 5000});
+        ks.notice("本地设置已清除，刷新页面后将读取默认配置！", {color: "green", time: 5000});
     },
     output: function () {
-        ks.notice("本功能制作中，敬请期待", {color: "yellow", time: 3000});
+        ks.notice("本功能制作中，敬请期待~", {color: "yellow", time: 3000});
     },
     getUser: function () {
         var name = location.search.split("u=");
@@ -181,7 +198,22 @@ var methods = {
                 case "select-multiple": type = "options"; break;
             }
 
+            // 是下拉框，遍历生成
+            if(obj.settings[item].type.indexOf("select") === 0 && obj.settings[item].dataset.key){
+                data[obj.settings[item].dataset.key].forEach((sitem, key) => {
+                    ks.create("option", {
+                        text: sitem.name,
+                        attr: {
+                            name: "value",
+                            value: key
+                        },
+                        parent: obj.settings[item]
+                    });
+                });
+            }
+
             if(type !== "options"){
+                console.log(obj.settings[item]);
                 obj.settings[item][type] = set[item];
 
                 obj.settings[item].onchange = function (ev) {
@@ -249,19 +281,8 @@ obj.settingBtn.output.onclick = methods.output;
 
 // 初始化
 fetch("https://dreamer-paul.github.io/KStart-Sites/site.json").then(res => res.json()).then((res) => {
-    res.forEach((item, key) => {
-        ks.create("option", {
-            text: item.name,
-            attr: {
-                name: "value",
-                value: key
-            },
-            parent: obj.settings.sites
-        });
-    });
-
-    return res;
-}).then((res) => {
+    data.sites = res;
+}).then(() => {
     var url = "https://dreamer-paul.github.io/KStart-Sites/" + (methods.getUser() ? methods.getUser() : "default") + ".json";
 
     fetch(url).then(res => res.json()).then(json => {
@@ -278,7 +299,7 @@ fetch("https://dreamer-paul.github.io/KStart-Sites/site.json").then(res => res.j
         // 如果
         if(data.user.sites.length){
             data.user.sites.forEach((item) => {
-                obj.main.sites.appendChild(methods.createItem(res[item]));
+                obj.main.sites.appendChild(methods.createItem(data.sites[item]));
             });
         }
         else{
@@ -289,19 +310,8 @@ fetch("https://dreamer-paul.github.io/KStart-Sites/site.json").then(res => res.j
         methods.changeSearch(data.user.search);
 
         if(data.user.background){
-            document.body.style.backgroundImage = "url(http://api.paugram.com/wallpaper?source=gt)";
+            document.body.style.background = "url(" + data.back_method[data.user.background].url + ") " + data.back_method[data.user.background].set;
         }
-
-        data.search_method.forEach((item, key) => {
-            ks.create("option", {
-                text: item.name,
-                attr: {
-                    name: "value",
-                    value: key
-                },
-                parent: obj.settings.search
-            });
-        });
 
         methods.setSetting();
     })
