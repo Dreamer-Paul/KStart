@@ -14,6 +14,9 @@
     --shadow: 0 0 5em rgba(0, 0, 0, .1);
     --shadow-thin: 0 0 1em rgba(0, 0, 0, .3);
     --shadow-thick: 0 0 5em rgba(0, 0, 0, .2);
+
+    --font-color: #666;
+    --font-shadow: 0 0 5px #fff, 0 2px 5px #fff;
 }
 
 html, body{
@@ -23,7 +26,10 @@ html, body{
 body{
     display: flex;
     flex-direction: column;
-    background: bottom right/60% no-repeat fixed;
+}
+body.dark{
+    --font-color: #fff;
+    --font-shadow: 0 0 5px #000, 0 2px 5px #000;
 }
 
 .iconfont{
@@ -183,11 +189,11 @@ main{
 
 .navi-title{
     color: #666;
+    color: var(--font-color);
+    text-shadow: var(--font-shadow);
     padding: 0 .5em;
     font-size: .875em;
     margin-top: .75em;
-    border-radius: 2em;
-    background: rgba(255, 255, 255, .85);
 }
 
 @media screen and (max-width: 768px){
@@ -198,11 +204,27 @@ main{
     }
 }
 
+.navi-background{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    z-index: -1;
+    position: fixed;
+    transition: opacity .5s;
+}
+.navi-background.active{
+    opacity: 1;
+}
+
 footer{
     left: 0;
     right: 0;
     bottom: 0;
     color: #999;
+    color: var(--font-color);
+    text-shadow: var(--font-shadow);
     padding: 1em 0;
     position: fixed;
     font-size: .875em;

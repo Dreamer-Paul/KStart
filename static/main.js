@@ -20,7 +20,8 @@ var obj = {
         search: ks.select(".search-selector"),
         input: ks.select(".input-box input"),
         submit: ks.select(".input-box .btn"),
-        sites: ks.select(".navi-items")
+        sites: ks.select(".navi-items"),
+        bg: ks.select(".navi-background")
     },
     window: {
         wrap: ks.select("window"),
@@ -305,11 +306,28 @@ fetch("site.json").then(res => res.json()).then((res) => {
             console.error("这个一般不会触发吧？");
         }
     }).then(() => {
-
         methods.changeSearch(data.user.search);
 
         if(data.user.background){
-            document.body.style.background = "url(" + data.back_method[data.user.background].url + ") " + data.back_method[data.user.background].set;
+            var img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.src = data.back_method[data.user.background].url;
+            
+            img.onload = function (ev) {
+                obj.main.bg.style.background = "url(" + img.src + ") " + data.back_method[data.user.background].set;
+                obj.main.bg.classList.add("active");
+
+                var one = document.createElement("canvas");
+
+                var context = one.getContext("2d");
+                context.drawImage(img, 0, 0, img.width, img.height, 0, 0, 1, 1);
+
+                var imgData = context.getImageData(0, 0, 1, 1).data;
+
+                if(imgData[0] <= 80 || imgData[1] <= 80 | imgData[2] <= 80){
+                    document.body.classList.add("dark");
+                }
+            }
         }
 
         methods.setSetting();
