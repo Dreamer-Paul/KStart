@@ -48,7 +48,7 @@ var data = {
         },
         {
             "name": "随机动漫壁纸",
-            "url": "https://api.paugram.com/wallpaper?source=gt",
+            "url": "https://api.paugram.com/wallpaper?source=sina",
             "set": "bottom right/60% no-repeat"
         },
         {
