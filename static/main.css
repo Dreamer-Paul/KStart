@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2020.5.18
+# Last Update: 2020.5.24
 
 一个简洁不失细节的起始页
 
@@ -252,16 +252,14 @@ window{
     overflow: auto;
     position: fixed;
     padding: 2em 1em;
-    /*visibility: hidden;*/
     pointer-events: none;
-    background: rgba(0, 0, 0, .2);
+    background: rgba(0, 0, 0, .3);
     transition: opacity .3s;
 }
 window::-webkit-scrollbar{ width: 0 }
 
 window.active{
     opacity: 1;
-    /*visibility: visible;*/
     pointer-events: auto;
 }
 

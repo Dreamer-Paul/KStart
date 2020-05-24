@@ -178,5 +178,23 @@
         "url": "https://www.163.com",
         "color": "c4282b",
         "icon": "iconfont icon-netease"
+    },
+    {
+        "name": "GetJS",
+        "url": "https://get.js.org",
+        "color": "55607f",
+        "icon": "iconfont icon-getjs"
+    },
+    {
+        "name": "12306",
+        "url": "https://www.12306.cn",
+        "color": "ff2603",
+        "icon": "iconfont icon-12306"
+    },
+    {
+        "name": "58 同城",
+        "url": "https://58.com",
+        "color": "0091d7",
+        "icon": "iconfont icon-58"
     }
 ]

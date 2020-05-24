@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2020.5.18
+# Last Update: 2020.5.24
 
 一个简洁不失细节的起始页
 
@@ -48,7 +48,7 @@ var data = {
         },
         {
             "name": "随机动漫壁纸",
-            "url": "https://api.paugram.com/wallpaper?source=sina",
+            "url": "https://api.paugram.com/wallpaper?source=gh",
             "set": "bottom right/60% no-repeat"
         },
         {
@@ -324,7 +324,7 @@ fetch("site.json").then(res => res.json()).then((res) => {
 
                 var imgData = context.getImageData(0, 0, 1, 1).data;
 
-                if(imgData[0] <= 80 || imgData[1] <= 80 | imgData[2] <= 80){
+                if(imgData[0] <= 160 || imgData[1] <= 160 | imgData[2] <= 160){
                     document.body.classList.add("dark");
                 }
             }
