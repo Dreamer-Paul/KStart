@@ -6,7 +6,7 @@
     <title>奇趣起始页</title>
     <link rel="icon" href="static/icon.png" sizes="192x192"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Dreamer-Paul/Kico-Style/kico.css">
-    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1809713_n9927a281tg.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_1809713_5in42ff75e.css">
     <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="static/main.css">
 </head>
@@ -50,12 +50,12 @@
                 <p>现有的类似站点已经很多了，为什么我仍然选择编写了这个项目？这是因为它们都是闭源的私人项目，只有作者本人才可以进行维护。</p>
                 <p>与此同时，这些站点的导航项大多已经预设。想要修改它们，要么需要注册后修改，要么就干脆不给改，个人觉得略显鸡肋。如果你更换了电脑，不就需要重新登录了吗？</p>
                 <p>介于采用 GitHub 托管的形式，本站属于“无后端”项目，一些可以提升用户体验的功能需要借助后端才能完成，我暂时没有去实现它。</p>
-                <h3>参照了：</h3>
+                <h3>类似项目：</h3>
                 <ul>
                     <li><a href="https://www.chainwon.com" target="_blank" rel="nofollow">轻婉起始页</a></li>
                     <li><a href="https://a.maorx.cn" target="_blank" rel="nofollow">青柠起始页</a></li>
                 </ul>
-                <h3>使用的项目：</h3>
+                <h3>使用了：</h3>
                 <ul>
                     <li><a href="https://www.iconfont.cn" target="_blank" rel="nofollow">IconFont</a></li>
                     <li><a href="https://github.com/Dreamer-Paul/Kico-Style" target="_blank" rel="nofollow">Kico Style</a></li>
@@ -81,14 +81,10 @@
                 </label>
                 <label>
                     <span>可选的预设导航项</span>
-                    <select multiple name="sites" data-key="sites"></select>
-                </label>
-                <label>
-                    <span>自定义导航项目：</span>
-                    <textarea name="custom" rows="6"></textarea>
+                    <select multiple name="sites" data-key="sites" style="height: 15em"></select>
                 </label>
                 <p>
-                    <button class="btn small blue" name="reset">清除本地配置</button>
+                    <button class="btn small blue" name="reset">恢复默认</button>
                     <button class="btn small" name="output">导出</button>
                 </p>
             </fieldset>

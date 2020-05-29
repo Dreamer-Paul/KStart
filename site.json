@@ -84,7 +84,7 @@
         "icon": "iconfont icon-aliyun"
     },
     {
-        "name": "地图",
+        "name": "百度地图",
         "url": "https://maps.baidu.com",
         "color": "8bc34a",
         "icon": "fa fa-map"
@@ -196,5 +196,45 @@
         "url": "https://58.com",
         "color": "0091d7",
         "icon": "iconfont icon-58"
+    },
+    {
+        "name": "金山文档",
+        "url": "https://kdocs.cn",
+        "color": "417ff9",
+        "icon": "iconfont icon-kdocs"
+    },
+    {
+        "name": "什么值得买",
+        "url": "https://www.smzdm.com",
+        "color": "e82b2b",
+        "icon": "iconfont icon-smzdm"
+    },
+    {
+        "name": "百度云盘",
+        "url": "https://pan.baidu.com",
+        "color": "3b8bfe",
+        "icon": "iconfont icon-baiduyun"
+    },
+    {
+        "name": "OneDrive",
+        "url": "https://onedrive.live.com",
+        "color": "28a8ea",
+        "icon": "iconfont icon-onedrive"
+    },
+    {
+        "name": "谷歌云盘",
+        "url": "https://drive.google.com",
+        "color": "777",
+        "icon": "iconfont icon-google-drive"
+    },
+    {
+        "name": "萌娘百科",
+        "url": "https://zh.moegirl.org",
+        "color": "018c03"
+    },
+    {
+        "name": "半次元",
+        "url": "https://bcy.net",
+        "color": "fa4b8b"
     }
 ]

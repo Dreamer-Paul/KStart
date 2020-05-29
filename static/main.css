@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2020.5.24
+# Last Update: 2020.5.29
 
 一个简洁不失细节的起始页
 
@@ -67,12 +67,13 @@ header .about-btn:hover .fa, header .setting-btn:hover .fa{
 header .fa{
     font-size: 1.5em;
     transition: transform .3s;
+    color: var(--font-color);
 }
 
 main{
     width: 100%;
     margin: auto;
-    padding: 4em 1em;
+    padding: 4em 1.5em;
     max-width: 60em;
 }
 
@@ -107,7 +108,7 @@ main{
 
 @media screen and (max-width: 768px){
     .navi-items{
-        grid-gap: 1em;
+        grid-gap: 1.5em;
         grid-template-columns: repeat(auto-fill, minmax(4em, 1fr));
     }
 }
@@ -198,9 +199,10 @@ main{
 
 @media screen and (max-width: 768px){
     .navi-icon{
-        width: 4rem;
-        height: 4rem;
-        line-height: 4rem;
+        width: 3.75rem;
+        height: 3.75rem;
+        font-size: 1.3em;
+        line-height: 3.75rem;
     }
 }
 
