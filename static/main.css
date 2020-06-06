@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2020.5.29
+# Last Update: 2020.6.6
 
 一个简洁不失细节的起始页
 
@@ -55,13 +55,26 @@ header{
     justify-content: flex-end;
 }
 
-header .about-btn, header .setting-btn{
+header .action-btn{
     padding: 1em;
     cursor: pointer;
     padding-bottom: 0;
 }
-header .about-btn:hover .fa, header .setting-btn:hover .fa{
+header .action-btn:hover .fa{
     transform: scale(1.2);
+}
+
+header .action-btn.updated:not(.active){
+    display: none;
+}
+
+header .action-btn.updated.active .fa{
+    animation: shiny .5s alternate infinite;
+}
+
+@keyframes shiny {
+    from { opacity: 0 }
+    to { opacity: 1 }
 }
 
 header .fa{
@@ -168,7 +181,7 @@ main{
 
     width: 5rem;
     height: 5rem;
-    font-size: 1.5em;
+    font-size: 1.75em;
     line-height: 5rem;
 
     margin: auto;

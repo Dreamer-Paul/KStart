@@ -230,11 +230,48 @@
     {
         "name": "萌娘百科",
         "url": "https://zh.moegirl.org",
-        "color": "018c03"
+        "color": "018c03",
+        "icon": "iconfont icon-moegirl"
     },
     {
         "name": "半次元",
         "url": "https://bcy.net",
-        "color": "fa4b8b"
+        "color": "fa4b8b",
+        "icon": "iconfont icon-bcy"
+    },
+    {
+        "name": "番组计划",
+        "url": "https://bangumi.tv",
+        "color": "f09199"
+    },
+    {
+        "name": "班图剪贴板",
+        "url": "https://pastebin.ubuntu.com",
+        "color": "dd4814",
+        "icon": "iconfont icon-ubuntu"
+    },
+    {
+        "name": "IconFont",
+        "url": "https://www.iconfont.cn",
+        "color": "ea4519",
+        "icon": "iconfont icon-iconfont"
+    },
+    {
+        "name": "站酷",
+        "url": "https://www.zcool.com.cn",
+        "color": "ffe300",
+        "icon": "iconfont icon-zcool"
+    },
+    {
+        "name": "UI 中国",
+        "url": "https://www.ui.cn",
+        "color": "3d7eff",
+        "icon": "iconfont icon-uizg"
+    },
+    {
+        "name": "Dribbble",
+        "url": "https://dribbble.com",
+        "color": "ea4c89",
+        "icon": "fa fa-dribbble"
     }
 ]

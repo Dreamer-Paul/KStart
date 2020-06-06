@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2020.5.24
+# Last Update: 2020.6.6
 
 一个简洁不失细节的起始页
 
@@ -12,8 +12,9 @@
 
 var obj = {
     header: {
-        about: ks.select(".about-btn"),
-        setting: ks.select(".setting-btn")
+        updated: ks.select(".action-btn.updated"),
+        about: ks.select(".action-btn.about"),
+        setting: ks.select(".action-btn.setting")
     },
     main: {
         select: ks.select(".search-select"),
@@ -40,6 +41,7 @@ var obj = {
 }
 
 var data = {
+    ver: "1.0.0",
     timer: "",
     window: 0,
     back_method: [
@@ -134,7 +136,7 @@ var methods = {
         var content = item.icon ? '<i class="' + item.icon + '"></i>' : item.name.substr(0, 1);
 
         return ks.create("a", {
-            html: `<a class="item" href="${item.url}">
+            html: `<a class="item" href="${item.url}" target="_blank">
             <figure class="navi-icon" style="background: #${item.color || Math.random().toString(16).substr(-6)}">
                 ${content}
             </figure>
@@ -247,11 +249,16 @@ obj.main.submit.onclick = (e) => {
 }
 
 // 打开按钮
-obj.header.about.onclick = function () {
+obj.header.updated.onclick = function () {
     methods.openWindow(0);
+    localStorage.setItem("paul-ver", data.ver);
+    obj.header.updated.classList.remove("active");
+}
+obj.header.about.onclick = function () {
+    methods.openWindow(1);
 }
 obj.header.setting.onclick = function () {
-    methods.openWindow(1);
+    methods.openWindow(2);
 }
 
 // 关闭面板
@@ -278,6 +285,11 @@ data.search_method.forEach((item, key) => {
 // 重置按钮
 obj.settingBtn.reset.onclick = methods.clear;
 obj.settingBtn.output.onclick = methods.output;
+
+// 版本更新提示
+if(localStorage.getItem("paul-ver") !== data.ver){
+    obj.header.updated.classList.add("active");
+}
 
 // 初始化
 fetch("site.json").then(res => res.json()).then((res) => {
@@ -324,7 +336,7 @@ fetch("site.json").then(res => res.json()).then((res) => {
 
                 var imgData = context.getImageData(0, 0, 1, 1).data;
 
-                if(imgData[0] <= 160 || imgData[1] <= 160 | imgData[2] <= 160){
+                if(imgData[0] <= 180 || imgData[1] <= 180 | imgData[2] <= 180){
                     document.body.classList.add("dark");
                 }
             }
