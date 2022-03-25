@@ -277,6 +277,7 @@ window.active{
 }
 
 .the-window{
+    color: #666;
     margin: auto;
     display: none;
     min-width: 15em;
@@ -291,6 +292,24 @@ window.active{
 }
 .the-window.closed{
     animation: fade-large-small .3s forwards;
+}
+
+.the-window.updated{ width: 100% }
+
+.the-window.updated details{
+    margin-top: 3em;
+}
+.the-window.updated details:first-child{
+    margin-top: 0;
+}
+
+.the-window.updated summary{
+    font-size: 1.2em;
+    font-weight: lighter;
+}
+
+.the-window.updated details[open] summary{
+    margin-bottom: 1em;
 }
 
 .the-window .window-head{

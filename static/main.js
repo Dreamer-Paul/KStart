@@ -40,7 +40,7 @@ const obj = {
 }
 
 const data = {
-    ver: "1.0.0",
+    ver: "1.1.0",
     timer: "",
     window: 0,
     background_type: [
