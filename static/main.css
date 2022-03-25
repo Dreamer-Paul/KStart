@@ -2,9 +2,9 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2020.6.6
+# Last Update: 2022.3.25
 
-一个简洁不失细节的起始页
+一个简洁轻巧的起始页
 
 本代码为奇趣保罗原创，并遵守 MIT 开源协议。欢迎访问我的博客：https://paugram.com
 
@@ -264,14 +264,12 @@ window{
     opacity: 0;
     z-index: 1;
     display: flex;
-    overflow: auto;
     position: fixed;
     padding: 2em 1em;
     pointer-events: none;
     background: rgba(0, 0, 0, .3);
     transition: opacity .3s;
 }
-window::-webkit-scrollbar{ width: 0 }
 
 window.active{
     opacity: 1;
@@ -319,4 +317,7 @@ window.active{
 
 .the-window .window-body{
     padding: 1.5em;
+    overflow: auto;
+    max-height: 80vh;
 }
+.the-window .window-body::-webkit-scrollbar{ width: 6px }

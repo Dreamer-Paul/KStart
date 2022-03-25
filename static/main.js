@@ -2,9 +2,9 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2020.6.6
+# Last Update: 2022.3.25
 
-一个简洁不失细节的起始页
+一个简洁轻巧的起始页
 
 本代码为奇趣保罗原创，并遵守 MIT 开源协议。欢迎访问我的博客：https://paugram.com
 
@@ -81,6 +81,11 @@ var data = {
             "url": "https://www.so.com/s?q=%s"
         },
         {
+            "name": "搜狗",
+            "icon": "sogou",
+            "url": "https://www.sogou.com/web?query=%s"
+        },
+        {
             "name": "DuckDuckGo",
             "icon": "duckduckgo",
             "url": "https://duckduckgo.com/?q=%s"
@@ -89,7 +94,7 @@ var data = {
     user: {
         search: 0,
         background: 0,
-        sites: [],
+        sites: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 16, 28, 31, 35],
         custom: []
     }
 }
@@ -97,15 +102,16 @@ var data = {
 
 var methods = {
     get: function (webData) {
-        var readData = JSON.parse(localStorage.getItem("paul-navi")) || webData;
+        const userSettings = JSON.parse(localStorage.getItem("paul-navi")) || webData;
 
-        for(var item in readData){
-            data.user[item] = readData[item];
+        for(var item in userSettings){
+            data.user[item] = userSettings[item];
         }
     },
     set: function () {
         if(data.sites){
             var sites = [];
+
             for(var site of data.sites){
                 if(site.selected) sites.push(site.value);
             }
@@ -113,14 +119,14 @@ var methods = {
 
         localStorage.setItem("paul-navi", JSON.stringify(data.user));
 
-        ks.notice("设置已保存至本地！", {color: "green", time: 3000});
+        ks.notice("设置已保存至本地！", { color: "green", time: 3000 });
     },
     clear: function () {
-        localStorage.clear("paul-navi");
-        ks.notice("本地设置已清除，刷新页面后将读取默认配置！", {color: "green", time: 5000});
+        localStorage.removeItem("paul-navi");
+        ks.notice("本地设置已清除，刷新页面后将读取默认配置！", { color: "green", time: 5000 });
     },
     output: function () {
-        ks.notice("本功能制作中，敬请期待~", {color: "yellow", time: 3000});
+        ks.notice("本功能制作中，敬请期待~", { color: "yellow", time: 3000 });
     },
     getUser: function () {
         var name = location.search.split("u=");
@@ -132,16 +138,26 @@ var methods = {
         data.user.search = key;
         if(data.search_method[key].icon) obj.main.select.innerHTML = `<i class="iconfont icon-${data.search_method[key].icon}"></i>`;
     },
-    createItem: function (item) {
+    createItem: function (item, key) {
         var content = item.icon ? '<i class="' + item.icon + '"></i>' : item.name.substr(0, 1);
 
         return ks.create("a", {
-            html: `<a class="item" href="${item.url}" target="_blank">
-            <figure class="navi-icon" style="background: #${item.color || Math.random().toString(16).substr(-6)}">
+            href: item.url,
+            class: "item",
+            attr: [
+                {
+                    name: "data-id",
+                    value: key
+                },
+                {
+                    name: "target",
+                    value: "_blank"
+                }
+            ],
+            html: `<figure class="navi-icon" style="background: #${item.color || Math.random().toString(16).substr(-6)}">
                 ${content}
             </figure>
-            <p class="navi-title">${item.name}</p>
-        </a>`
+            <p class="navi-title">${item.name}</p>`
         });
     },
     openWindow: function (key) {
@@ -291,57 +307,69 @@ if(localStorage.getItem("paul-ver") !== data.ver){
     obj.header.updated.classList.add("active");
 }
 
-// 初始化
+// 初始化，先获取预设站点数据
 fetch("site.json").then(res => res.json()).then((res) => {
     data.sites = res;
 }).then(() => {
-    var url = "https://dreamer-paul.github.io/KStart-Sites/" + (methods.getUser() ? methods.getUser() : "default") + ".json";
+    const user = methods.getUser();
 
-    fetch(url).then(res => res.json()).then(json => {
-        // 读取在线、本地或默认数据
-        methods.get(json);
+    // 读取在线或本地数据
+    if(user){
+        const url = `https://dreamer-paul.github.io/KStart-Sites/${user}.json`;
 
-        // 用户自定义站点
-        if(json.custom){
-            json.custom.forEach((item) => {
-                obj.main.sites.appendChild(methods.createItem(item));
-            });
-        }
+        console.warn("Web mode");
 
-        // 如果
-        if(data.user.sites.length){
-            data.user.sites.forEach((item) => {
-                obj.main.sites.appendChild(methods.createItem(data.sites[item]));
-            });
-        }
-        else{
-            console.error("这个一般不会触发吧？");
-        }
-    }).then(() => {
-        methods.changeSearch(data.user.search);
+        return fetch(url).then(res => res.json());
+    }
 
-        if(data.user.background){
-            var img = new Image();
-            img.crossOrigin = "Anonymous";
-            img.src = data.back_method[data.user.background].url;
-            
-            img.onload = function (ev) {
-                obj.main.bg.style.background = "url(" + img.src + ") " + data.back_method[data.user.background].set;
-                obj.main.bg.classList.add("active");
+    console.warn("Local mode");
 
-                var one = document.createElement("canvas");
+    return data.user;
+}).then((json) => {
+    methods.get(json);
 
-                var context = one.getContext("2d");
-                context.drawImage(img, 0, 0, img.width, img.height, 0, 0, 1, 1);
+    const { sites, custom } = data.user;
 
-                var imgData = context.getImageData(0, 0, 1, 1).data;
+    // 用户自定义站点
+    if(custom && Array.isArray(custom)){
+        json.custom.forEach((item, key) => {
+            obj.main.sites.appendChild(methods.createItem(item));
+        });
+    }
 
-                if(imgData[0] <= 180 || imgData[1] <= 180 | imgData[2] <= 180){
-                    document.body.classList.add("dark");
-                }
+    // 用户选中的预设站点
+    if(sites && Array.isArray(sites)){
+        sites.forEach((item) => {
+            obj.main.sites.appendChild(methods.createItem(data.sites[item], item));
+        });
+    }
+    else{
+        console.error("这个一般不会触发吧？");
+    }
+}).then(() => {
+    methods.changeSearch(data.user.search);
+
+    if(data.user.background){
+        var img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.src = data.back_method[data.user.background].url;
+        
+        img.onload = function (ev) {
+            obj.main.bg.style.background = "url(" + img.src + ") " + data.back_method[data.user.background].set;
+            obj.main.bg.classList.add("active");
+
+            var one = document.createElement("canvas");
+
+            var context = one.getContext("2d");
+            context.drawImage(img, 0, 0, img.width, img.height, 0, 0, 1, 1);
+
+            var imgData = context.getImageData(0, 0, 1, 1).data;
+
+            if(imgData[0] <= 180 || imgData[1] <= 180 | imgData[2] <= 180){
+                document.body.classList.add("dark");
             }
         }
+    }
 
-        methods.setSetting();
-    })
+    methods.setSetting();
 });
