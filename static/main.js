@@ -10,7 +10,7 @@
 
 ---- */
 
-var obj = {
+const obj = {
     header: {
         updated: ks.select(".action-btn.updated"),
         about: ks.select(".action-btn.about"),
@@ -26,8 +26,7 @@ var obj = {
     },
     window: {
         wrap: ks.select("window"),
-        item: ks(".the-window"),
-        close: ks(".window-head button")
+        item: ks(".the-window")
     },
     settings: {
         search: ks.select("[name=search]"),
@@ -40,11 +39,11 @@ var obj = {
     }
 }
 
-var data = {
+const data = {
     ver: "1.0.0",
     timer: "",
     window: 0,
-    back_method: [
+    background_type: [
         {
             "name": "无背景"
         },
@@ -91,7 +90,7 @@ var data = {
             "url": "https://duckduckgo.com/?q=%s"
         }
     ],
-    user: {
+    user_set: {
         search: 0,
         background: 0,
         sites: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 16, 28, 31, 35],
@@ -99,16 +98,15 @@ var data = {
     }
 }
 
+// 各种方法
+const methods = {
+    // 存储相关
+    getStorage: () => {
+        const storage = localStorage.getItem("paul-userset");
 
-var methods = {
-    get: function (webData) {
-        const userSettings = JSON.parse(localStorage.getItem("paul-navi")) || webData;
-
-        for(var item in userSettings){
-            data.user[item] = userSettings[item];
-        }
+        return storage ? JSON.parse(localStorage.getItem("paul-userset")) : undefined;
     },
-    set: function () {
+    setStorage: () => {
         if(data.sites){
             var sites = [];
 
@@ -117,28 +115,29 @@ var methods = {
             }
         }
 
-        localStorage.setItem("paul-navi", JSON.stringify(data.user));
+        localStorage.setItem("paul-userset", JSON.stringify(data.user_set));
 
         ks.notice("设置已保存至本地！", { color: "green", time: 3000 });
     },
-    clear: function () {
-        localStorage.removeItem("paul-navi");
+    clearStorage: () => {
+        localStorage.removeItem("paul-userset");
+
         ks.notice("本地设置已清除，刷新页面后将读取默认配置！", { color: "green", time: 5000 });
     },
-    output: function () {
-        ks.notice("本功能制作中，敬请期待~", { color: "yellow", time: 3000 });
+
+    // 修改用户设置
+    setUserSettings: (newData) => {
+        data.user_set = { ...data.user_set, ...newData };
     },
-    getUser: function () {
+
+    // 获取地址栏用户参数
+    getUser: () => {
         var name = location.search.split("u=");
 
         return name ? name[1] : false;
     },
-    changeSearch: function (key) {
-        obj.main.search.classList.remove("active");
-        data.user.search = key;
-        if(data.search_method[key].icon) obj.main.select.innerHTML = `<i class="iconfont icon-${data.search_method[key].icon}"></i>`;
-    },
-    createItem: function (item, key) {
+
+    createItem: (item, key) => {
         var content = item.icon ? '<i class="' + item.icon + '"></i>' : item.name.substr(0, 1);
 
         return ks.create("a", {
@@ -160,12 +159,12 @@ var methods = {
             <p class="navi-title">${item.name}</p>`
         });
     },
-    openWindow: function (key) {
+    openWindow: (key) => {
         data.window = key;
         obj.window.wrap.classList.add("active");
         obj.window.item[key].classList.add("active");
     },
-    closeWindow: function () {
+    closeWindow: () => {
         data.timer = clearTimeout(methods.closeWindow);
 
         obj.window.item[data.window].classList.remove("closed");
@@ -173,7 +172,7 @@ var methods = {
 
         obj.window.wrap.classList.remove("active");
     },
-    closeWindow2: function () {
+    closeWindow2: () => {
         if(!data.timer){
             data.timer = setTimeout(methods.closeWindow, 300);
         }
@@ -181,29 +180,113 @@ var methods = {
         obj.window.item[data.window].classList.add("closed");
     },
 
-    form: {
-        multiple: function (type, select, data) {
-            // 读取表单转数组
-            if(type == "get"){
-                var selected = [];
+    // 读取表单转数组
+    getMulSelectValue: (el) => {
+        let selected = [];
 
-                for(var item of select){
-                    if(item.selected) selected.push(parseInt(item.value));
-                }
+        for(var item of el){
+            item.selected && selected.push(parseInt(item.value));
+        }
 
-                return selected;
-            }
-            // 读取数组转表单
-            else{
-                for(var item of data){
-                    select[item].selected = true;
-                }
-            }
+        return selected;
+    },
+    // 读取数组转表单
+    setMulSelectValue: (el, value) => {
+        for(var item of value){
+            el[item].selected = true;
+        }
+    }
+}
+
+// 涉及到 DOM 交互的操作
+const modifys = {
+    // 搜索里面的按钮
+    selectSearchButton: () => {
+        const { search } = obj.main;
+
+        search.classList.toggle("active");
+    },
+    submitSearchButton: (e) => {
+        e.preventDefault();
+        window.open(data.search_method[data.user_set.search].url.replace("%s", obj.main.input.value));
+    },
+
+    // 右上方的按钮
+    hideSettingsButton: () => {
+        obj.header.setting.setAttribute("hidden", "");
+    },
+    updatedButton: () => {
+        methods.openWindow(0);
+        localStorage.setItem("paul-ver", data.ver);
+        obj.header.updated.classList.remove("active");
+    },
+
+    // 设置里面的按钮
+    clearButton: () => {
+        methods.clearStorage();
+    },
+    outputButton: () => {
+        ks.notice("本功能制作中，敬请期待~", { color: "yellow", time: 3000 });
+    },
+
+    // 修改搜索方式
+    changeSearch: (key) => {
+        const { search } = obj.main;
+
+        search.classList.remove("active");
+        data.user_set.search = key;
+
+        data.search_method[key].icon && (
+            obj.main.select.innerHTML = `<i class="iconfont icon-${data.search_method[key].icon}"></i>`
+        )
+    },
+
+    // 初始化主体的元素
+    initBody: () => {
+        // 搜索
+        obj.main.select.onclick = modifys.selectSearchButton;
+        obj.main.submit.onclick = modifys.submitSearchButton;
+
+        data.search_method.forEach((item, key) => {
+            var a = ks.create("div", {
+                class: "item",
+                text: item.name,
+                parent: obj.main.search
+            });
+
+            a.onclick = () => modifys.changeSearch(key);
+        })
+
+        // 打开按钮
+        obj.header.updated.onclick = modifys.updatedButton;
+        obj.header.about.onclick = () => {
+            methods.openWindow(1);
+        }
+        obj.header.setting.onclick = () => {
+            methods.openWindow(2);
+        }
+
+        // 关闭面板
+        obj.window.wrap.onclick = (e) => {
+            const isCloseBtn = e.target.nodeName === "BUTTON" && e.target.dataset.type === "close";
+            const isWindow = e.target == obj.window.wrap;
+
+            (isWindow || isCloseBtn) && methods.closeWindow2();
+        }
+
+        // 重置按钮
+        obj.settingBtn.reset.onclick = modifys.clearButton;
+        obj.settingBtn.output.onclick = methods.outputButton;
+
+        // 版本更新提示
+        if(localStorage.getItem("paul-ver") !== data.ver){
+            obj.header.updated.classList.add("active");
         }
     },
 
-    setSetting: function () {
-        var set = data.user;
+    // 初始化设置表单项
+    initSettingForm: () => {
+        var set = data.user_set;
 
         for(item in set){
             if(!obj.settings[item]) return;
@@ -234,78 +317,52 @@ var methods = {
             if(type !== "options"){
                 obj.settings[item][type] = set[item];
 
-                obj.settings[item].onchange = function (ev) {
-                    data.user[i] = ev.target[type];
-    
-                    methods.set();
+                obj.settings[item].onchange = (ev) => {
+                    data.user_set[i] = ev.target[type];
+
+                    methods.setStorage();
                 }
             }
             else{
                 // 设置表单
-                methods.form.multiple("set", obj.settings[item], set[item]);
+                methods.setMulSelectValue(obj.settings[item], set[item]);
 
-                obj.settings[item].onchange = function (ev) {
+                obj.settings[item].onchange = () => {
                     // 读取表单
-                    data.user[i] = methods.form.multiple("get", obj.settings[i], set[item]);
+                    data.user_set[i] = methods.getMulSelectValue(obj.settings[i]);
 
-                    methods.set();
+                    methods.setStorage();
                 }
+            }
+        }
+    },
+
+    // 深色背景模式检测
+    checkDarkMode: () => {
+        var img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.src = data.background_type[data.user_set.background].url;
+
+        // 深色背景增加深色模式
+        img.onload = () => {
+            obj.main.bg.style.background = `url(${img.src}) ${data.background_type[data.user_set.background].set}`;
+            obj.main.bg.classList.add("active");
+
+            var canvas = document.createElement("canvas");
+
+            var context = canvas.getContext("2d");
+            context.drawImage(img, 0, 0, img.width, img.height, 0, 0, 1, 1);
+
+            var imgData = context.getImageData(0, 0, 1, 1).data;
+
+            if(imgData[0] <= 180 || imgData[1] <= 180 | imgData[2] <= 180){
+                document.body.classList.add("dark");
             }
         }
     }
 }
 
-// 搜索
-obj.main.select.onclick = function () {
-    obj.main.search.classList.toggle("active");
-}
-obj.main.submit.onclick = (e) => {
-    e.preventDefault();
-    window.open(data.search_method[data.user.search].url.replace("%s", obj.main.input.value));
-}
-
-// 打开按钮
-obj.header.updated.onclick = function () {
-    methods.openWindow(0);
-    localStorage.setItem("paul-ver", data.ver);
-    obj.header.updated.classList.remove("active");
-}
-obj.header.about.onclick = function () {
-    methods.openWindow(1);
-}
-obj.header.setting.onclick = function () {
-    methods.openWindow(2);
-}
-
-// 关闭面板
-obj.window.wrap.onclick = function (e) {
-    if(e.target == obj.window.wrap){
-        methods.closeWindow2();
-    }
-}
-
-// 关闭按钮
-obj.window.close.each((item) => {
-    item.onclick = methods.closeWindow2;
-})
-
-data.search_method.forEach((item, key) => {
-    var a = ks.create("div", {
-        class: "item",
-        text: item.name,
-        parent: obj.main.search
-    });
-    a.onclick = () => methods.changeSearch(key);
-})
-
-// 重置按钮
-obj.settingBtn.reset.onclick = methods.clear;
-obj.settingBtn.output.onclick = methods.output;
-
-// 版本更新提示
-if(localStorage.getItem("paul-ver") !== data.ver){
-    obj.header.updated.classList.add("active");
-}
+modifys.initBody();
 
 // 初始化，先获取预设站点数据
 fetch("site.json").then(res => res.json()).then((res) => {
@@ -319,57 +376,40 @@ fetch("site.json").then(res => res.json()).then((res) => {
 
         console.warn("Web mode");
 
+        modifys.hideSettingsButton();
+
         return fetch(url).then(res => res.json());
     }
 
     console.warn("Local mode");
 
-    return data.user;
-}).then((json) => {
-    methods.get(json);
+    return false;
+}).then((webData) => {
+    const storage = webData || methods.getStorage();
 
-    const { sites, custom } = data.user;
+    storage && methods.setUserSettings(storage);
+
+    const { sites, custom } = data.user_set;
 
     // 用户自定义站点
     if(custom && Array.isArray(custom)){
-        json.custom.forEach((item, key) => {
+        custom.forEach(item => {
             obj.main.sites.appendChild(methods.createItem(item));
         });
     }
 
     // 用户选中的预设站点
     if(sites && Array.isArray(sites)){
-        sites.forEach((item) => {
+        sites.forEach(item => {
             obj.main.sites.appendChild(methods.createItem(data.sites[item], item));
         });
     }
     else{
         console.error("这个一般不会触发吧？");
     }
-}).then(() => {
-    methods.changeSearch(data.user.search);
 
-    if(data.user.background){
-        var img = new Image();
-        img.crossOrigin = "Anonymous";
-        img.src = data.back_method[data.user.background].url;
-        
-        img.onload = function (ev) {
-            obj.main.bg.style.background = "url(" + img.src + ") " + data.back_method[data.user.background].set;
-            obj.main.bg.classList.add("active");
+    data.user_set.background && modifys.checkDarkMode();
 
-            var one = document.createElement("canvas");
-
-            var context = one.getContext("2d");
-            context.drawImage(img, 0, 0, img.width, img.height, 0, 0, 1, 1);
-
-            var imgData = context.getImageData(0, 0, 1, 1).data;
-
-            if(imgData[0] <= 180 || imgData[1] <= 180 | imgData[2] <= 180){
-                document.body.classList.add("dark");
-            }
-        }
-    }
-
-    methods.setSetting();
+    modifys.changeSearch(data.user_set.search);
+    modifys.initSettingForm();
 });
