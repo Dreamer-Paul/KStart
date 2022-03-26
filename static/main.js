@@ -34,8 +34,15 @@ const obj = {
         sites: ks.select("[name=sites]")
     },
     settingBtn: {
-        reset: ks.select("[name=reset]"),
-        output: ks.select("[name=output]")
+        reset: ks.select("#set-reset"),
+        input: ks.select("#set-input"),
+        output: ks.select("#set-output"),
+        file: ks.select("#set-file"),
+    },
+
+    // 不渲染的元素
+    _internal: {
+        link: ks.create("a")
     }
 }
 
@@ -43,6 +50,7 @@ const data = {
     ver: "1.1.0",
     timer: "",
     window: 0,
+    sites: [],
     background_type: [
         {
             "name": "无背景"
@@ -107,22 +115,10 @@ const methods = {
         return storage ? JSON.parse(localStorage.getItem("paul-userset")) : undefined;
     },
     setStorage: () => {
-        if(data.sites){
-            var sites = [];
-
-            for(var site of data.sites){
-                if(site.selected) sites.push(site.value);
-            }
-        }
-
         localStorage.setItem("paul-userset", JSON.stringify(data.user_set));
-
-        ks.notice("设置已保存至本地！", { color: "green", time: 3000 });
     },
     clearStorage: () => {
         localStorage.removeItem("paul-userset");
-
-        ks.notice("本地设置已清除，刷新页面后将读取默认配置！", { color: "green", time: 5000 });
     },
 
     // 修改用户设置
@@ -224,9 +220,48 @@ const modifys = {
     // 设置里面的按钮
     clearButton: () => {
         methods.clearStorage();
+
+        ks.notice("本地设置已清除，刷新页面后将读取默认配置！", { color: "green", time: 5000 });
+    },
+    inputButton: () => {
+        obj.settingBtn.file.click();
     },
     outputButton: () => {
-        ks.notice("本功能制作中，敬请期待~", { color: "yellow", time: 3000 });
+        const blob = new Blob([ JSON.stringify(data.user_set, null, 2) ], { type: "application/json" });
+
+        obj._internal.link.href = URL.createObjectURL(blob);
+        obj._internal.link.download = `userset-${parseInt(new Date().getTime() / 1000)}.json`;
+        obj._internal.link.click();
+
+        ks.notice("设置项已经导出，你可以将它上传到 GitHub 仓库以对外展示", { color: "yellow", time: 5000 });
+    },
+    fileInputChange: (e) => {
+        const file = e.target.files && e.target.files[0];
+
+        if(!file){
+            console.log("🔮 也许是不存在的操作？");
+            return;
+        }
+
+        if(file.type !== "application/json"){
+            ks.notice("导入的文件必须是 JSON 格式", { color: "red", time: 3000 });
+            return;
+        }
+
+        file.text().then(text => {
+            try{
+                const json = JSON.parse(text);
+
+                data.user_set = json;
+                methods.setStorage();
+
+                ks.notice("导入成功，刷新页面后生效！", { color: "green", time: 5000 });
+            }
+            catch(e){
+                ks.notice("JSON 文件格式错误，请检查", { color: "red", time: 3000 });
+                return;
+            }
+        });
     },
 
     // 修改搜索方式
@@ -276,7 +311,9 @@ const modifys = {
 
         // 重置按钮
         obj.settingBtn.reset.onclick = modifys.clearButton;
-        obj.settingBtn.output.onclick = methods.outputButton;
+        obj.settingBtn.input.onclick = modifys.inputButton;
+        obj.settingBtn.output.onclick = modifys.outputButton;
+        obj.settingBtn.file.onchange = modifys.fileInputChange;
 
         // 版本更新提示
         if(localStorage.getItem("paul-ver") !== data.ver){
@@ -321,6 +358,8 @@ const modifys = {
                     data.user_set[i] = ev.target[type];
 
                     methods.setStorage();
+
+                    ks.notice("设置已保存至本地！", { color: "green", time: 3000 });
                 }
             }
             else{
@@ -332,6 +371,8 @@ const modifys = {
                     data.user_set[i] = methods.getMulSelectValue(obj.settings[i]);
 
                     methods.setStorage();
+
+                    ks.notice("设置已保存至本地！", { color: "green", time: 3000 });
                 }
             }
         }

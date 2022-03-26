@@ -130,9 +130,11 @@
                     <span>可选的预设导航项</span>
                     <select multiple name="sites" data-key="sites" style="height: 15em"></select>
                 </label>
-                <p>
-                    <button class="btn small blue" name="reset">恢复默认</button>
-                    <button class="btn small" name="output">导出</button>
+                <p class="btn-group">
+                    <button class="btn small blue" id="set-reset">恢复默认</button>
+                    <button class="btn small" id="set-input">导入</button>
+                    <button class="btn small" id="set-output">导出</button>
+                    <input type="file" id="set-file" hidden />
                 </p>
             </fieldset>
         </div>
