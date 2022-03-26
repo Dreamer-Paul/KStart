@@ -12,7 +12,7 @@
 </head>
 <body>
 <header>
-    <div class="action-btn updated" ks-tag="bottom" ks-text="更新啦">
+    <div class="action-btn updated" ks-tag="bottom" ks-text="更新日志">
         <i class="fa fa-bullhorn"></i>
     </div>
     <div class="action-btn about" ks-tag="bottom" ks-text="关于">
@@ -43,21 +43,22 @@
     <section class="the-window updated">
         <div class="window-head">
             <button data-type="close">×</button>
-            <h3>导航更新啦</h3>
+            <h3>更新日志</h3>
         </div>
         <div class="window-body">
             <article>
                 <blockquote>时隔两年，这个老项目又给我成功拿出来挖坟了，还是因为群里有人在用，顿时有了想法，哈哈！</blockquote>
                 <h3>本次更新：</h3>
                 <ul>
-                    <li>优化代码命名和逻辑，增加可读性，更新为现代 JavaScript 写法，鼓励你和我一起参与本项目的<a href="https://github.com/Dreamer-Paul/KStart" target="_blank">维护</a>！</li>
+                    <li>优化代码命名和逻辑，增加可读性，更新为现代 JavaScript 写法，鼓励你和我一起参与本项目的 <a href="https://github.com/Dreamer-Paul/KStart" target="_blank">维护</a>！</li>
                     <li>窗口关闭按钮改为事件委托，修复用户模式下的 Bug（无法进行设置）</li>
                     <li>增加了搜狗搜索</li>
                     <li>替换了新的橙色 Logo</li>
                     <li>调整导航项 DOM 结构，修改版权展示时间</li>
                     <li>解决了在用户模式下（地址栏输入 <code>?u=paul</code>）配置会被本地覆盖的 Bug</li>
                     <li>在用户模式下，禁止使用设置功能</li>
-                    <li>页脚版权的时间自动生成，过期（气）是不存在的！</li>
+                    <li>页脚版权的时间自动生成，过期（气）是不存在的啦！</li>
+                    <li>增加个人设置导入导出功能，数据丢失是不存在的啦！</li>
                 </ul>
 
                 <details>
@@ -76,7 +77,6 @@
                         <li>可拖拽调整导航项顺序</li>
                         <li>更舒适的自定义站点列表体验</li>
                         <li>可供设定你自己的壁纸（本地或外链）</li>
-                        <li>提供下载个人设置的功能（方便提交到 GitHub）</li>
                         <li>更易操作的设置面板（可能会在本项目的 2.0 版本实现）</li>
                     </ul>
                 </details>
@@ -131,9 +131,9 @@
                     <select multiple name="sites" data-key="sites" style="height: 15em"></select>
                 </label>
                 <p class="btn-group">
-                    <button class="btn small blue" id="set-reset">恢复默认</button>
-                    <button class="btn small" id="set-input">导入</button>
-                    <button class="btn small" id="set-output">导出</button>
+                    <button class="btn small blue" id="set-reset" title="重置个人设置为默认值">重置为默认</button>
+                    <button class="btn small" id="set-input" title="导入个人设置">导入</button>
+                    <button class="btn small" id="set-output" title="导出个人设置">导出</button>
                     <input type="file" id="set-file" hidden />
                 </p>
             </fieldset>

@@ -17,6 +17,8 @@
 
     --font-color: #666;
     --font-shadow: 0 0 5px #fff, 0 2px 5px #fff;
+
+    --btn-blue-shadow-color: #8ac4ea;
 }
 
 html, body{
@@ -45,6 +47,17 @@ article h3:first-child{ margin-top: 0 }
 
 article img{ border-radius: 1em }
 
+.btn{
+    transition: opacity .3s, box-shadow .3s;
+}
+.btn:active{
+    opacity: .9;
+}
+
+.btn.blue:active{
+    box-shadow: var(--btn-blue-shadow-color) 0 0 1px 4px;
+}
+
 .btn-group{
     gap: .5em;
     display: flex;
@@ -68,10 +81,6 @@ header .action-btn{
 }
 header .action-btn:hover .fa{
     transform: scale(1.2);
-}
-
-header .action-btn.updated:not(.active){
-    display: none;
 }
 
 header .action-btn.updated.active .fa{
