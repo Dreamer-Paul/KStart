@@ -11,14 +11,36 @@
 ---- */
 
 :root{
+    color: #555;
+
     --shadow: 0 0 5em rgba(0, 0, 0, .1);
     --shadow-thin: 0 0 1em rgba(0, 0, 0, .3);
     --shadow-thick: 0 0 5em rgba(0, 0, 0, .2);
 
-    --font-color: #666;
-    --font-shadow: 0 0 5px #fff, 0 2px 5px #fff;
+    --input-bg: #fff;
+    --search-bg: #fff;
 
-    --btn-blue-shadow-color: #8ac4ea;
+    /* 和背景主体反过来的字体颜色 */
+    --font-color: #333;
+    --font-shadow: 0 0 5px #fff, 0 2px 5px #fff;
+}
+
+@media screen and (prefers-color-scheme: dark){
+    :root{
+        color: #ccc;
+        background-color: #222;
+
+        --gray: #555;
+        --shadow: 0 0 5em rgba(255, 255, 255, .1);
+        --shadow-thin: 0 0 1em rgba(255, 255, 255, .3);
+        --shadow-thick: 0 0 5em rgba(255, 255, 255, .2);
+
+        --input-bg: #222;
+        --search-bg: rgba(255, 255, 255, .2);
+
+        --font-color: #eee;
+        --font-shadow: 0 0 5px #000, 0 2px 5px #000;
+    }
 }
 
 html, body{
@@ -30,7 +52,8 @@ body{
     flex-direction: column;
 }
 body.dark{
-    --font-color: #fff;
+    color: #fff;
+
     --font-shadow: 0 0 5px #000, 0 2px 5px #000;
 }
 
@@ -54,8 +77,9 @@ article img{ border-radius: 1em }
     opacity: .9;
 }
 
-.btn.blue:active{
-    box-shadow: var(--btn-blue-shadow-color) 0 0 1px 4px;
+.btn.primary{
+    color: #fff;
+    background-color: var(--primary);
 }
 
 .btn-group{
@@ -95,22 +119,23 @@ header .action-btn.updated.active .fa{
 header .fa{
     font-size: 1.5em;
     transition: transform .3s;
-    color: var(--font-color);
 }
 
 main{
     width: 100%;
     margin: auto;
-    padding: 4em 1.5em;
+    padding: 5em 1.75em;
     max-width: 60em;
 }
 
 .input-box{
     display: flex;
+    color: var(--font-color);
     position: relative;
     padding: .5em 1em;
     border-radius: 3em;
-    background: #fff;
+    background-color: #fff;
+    background-color: var(--input-bg);
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
     box-shadow: var(--shadow);
     transition: box-shadow .3s;
@@ -119,12 +144,35 @@ main{
     box-shadow: var(--shadow-thick);
 }
 
+@media screen and (prefers-color-scheme: dark){
+    .input-box{
+        background-color: rgba(255, 255, 255, .2);
+    }
+
+    .input-box input::-webkit-input-placeholder{
+        color: inherit;
+    }
+
+    .input-box input:-ms-input-placeholder{
+        color: inherit;
+    }
+
+    .input-box input::placeholder{
+        color: inherit;
+    }
+
+    .navi-icon{
+        filter: brightness(.7);
+    }
+}
+
 .input-box input{
     flex: 1 1 auto;
     max-width: 100%;
     border-radius: 0;
     border: none;
     margin: 0 1em;
+    background-color: transparent;
 }
 
 .navi-items{
@@ -136,7 +184,7 @@ main{
 
 @media screen and (max-width: 768px){
     .navi-items{
-        grid-gap: 1.5em;
+        grid-gap: 2em 1.5em;
         grid-template-columns: repeat(auto-fill, minmax(4em, 1fr));
     }
 }
@@ -161,13 +209,15 @@ main{
 
 .search-selector{
     top: 3em;
+    z-index: 1;
     opacity: 0;
     padding: .75em 0;
     overflow: hidden;
     visibility: hidden;
     position: absolute;
-    background: #fff;
-    border-radius: 1em;
+    background-color: #fff;
+    background-color: var(--input-bg);
+    border-radius: var(--radius);
     box-shadow: var(--shadow);
     transform: scale(1, 0);
     transform-origin: top center;
@@ -180,19 +230,25 @@ main{
     transform: scale(1);
 }
 
+.search-selector .iconfont{
+    opacity: .5;
+    margin-right: .75em;
+}
+
 .search-selector .item{
     cursor: pointer;
     padding: .5em 1em;
-    transition: color .3s, background .3s;
+    transition: color .3s, background-color .3s;
 }
 .search-selector .item:hover{
     color: #fff;
-    background: #3498db;
+    background-color: #3498db;
+    background-color: var(--primary);
 }
 
 .navi-icon{
     color: #fff;
-    background: #666;
+    background-color: #666;
 
     width: 5rem;
     height: 5rem;
@@ -217,8 +273,6 @@ main{
 .navi-icon img{ vertical-align: top }
 
 .navi-title{
-    color: #666;
-    color: var(--font-color);
     text-shadow: var(--font-shadow);
     padding: 0 .5em;
     font-size: .875em;
@@ -248,12 +302,21 @@ main{
     opacity: 1;
 }
 
+@media screen and (prefers-color-scheme: dark){
+    /* 随机动漫壁纸需要滤镜隐藏 */
+    .navi-background.type-1{
+        mix-blend-mode: multiply;
+    }
+    /* 必应壁纸需要低透明度 */
+    .navi-background.type-2.active{
+        opacity: .2;
+    }
+}
+
 footer{
     left: 0;
     right: 0;
     bottom: 0;
-    color: #999;
-    color: var(--font-color);
     text-shadow: var(--font-shadow);
     padding: 1em 0;
     position: fixed;
@@ -282,8 +345,17 @@ window{
     position: fixed;
     padding: 2em 1em;
     pointer-events: none;
+    color: var(--font-color);
     background: rgba(0, 0, 0, .3);
     transition: opacity .3s;
+    backdrop-filter: blur(5px);
+    --webkit-backdrop-filter: blur(5px);
+}
+
+@media screen and (prefers-color-scheme: dark){
+    window{
+        background: rgba(255, 255, 255, .1);
+    }
 }
 
 window.active{
@@ -292,13 +364,13 @@ window.active{
 }
 
 .the-window{
-    color: #666;
     margin: auto;
     display: none;
     min-width: 15em;
     max-width: 40em;
     background: #fff;
-    border-radius: 1em;
+    background: var(--input-bg);
+    border-radius: var(--radius);
     box-shadow: var(--shadow-thick);
 }
 .the-window.active{
@@ -349,7 +421,7 @@ window.active{
 }
 
 .the-window .window-body{
-    padding: 1.5em;
+    padding: 1.25em;
     overflow: auto;
     max-height: 80vh;
 }

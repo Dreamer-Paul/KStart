@@ -289,7 +289,7 @@ function KStart() {
       data.search_method.forEach((item, key) => {
         const a = ks.create("div", {
           class: "item",
-          text: item.name,
+          html: `<i class="iconfont icon-${item.icon}"></i>${item.name}`,
           parent: obj.main.search
         });
 
@@ -390,6 +390,7 @@ function KStart() {
 
       // 深色背景增加深色模式
       img.onload = () => {
+        obj.main.bg.classList.add(`type-${data.user_set.background}`);
         obj.main.bg.style.background = `url(${img.src}) ${data.background_type[data.user_set.background].set}`;
         obj.main.bg.classList.add("active");
 
