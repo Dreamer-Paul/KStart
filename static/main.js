@@ -68,7 +68,7 @@ function KStart() {
       },
       {
         name: "Unsplash 随机图片",
-        url: "https://source.unsplash.com/random",
+        url: "https://source.unsplash.com/random/1920x1080",
         set: "center/cover no-repeat",
       }
     ],
