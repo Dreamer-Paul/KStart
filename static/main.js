@@ -66,6 +66,11 @@ function KStart() {
         url: "https://api.paugram.com/bing",
         set: "center/cover no-repeat",
       },
+      {
+        name: "Unsplash 随机图片",
+        url: "https://source.unsplash.com/random",
+        set: "center/cover no-repeat",
+      }
     ],
     search_method: [
       {
