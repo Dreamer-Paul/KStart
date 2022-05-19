@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2022.5.9
+# Last Update: 2022.5.19
 
 一个简洁轻巧的起始页
 
@@ -431,12 +431,16 @@ function KStart() {
 
           const toId = to.getAttribute('data-id')
           const sites = data.user_set.sites;
-          if (sites.indexOf(Number(fromId)) > sites.indexOf(Number(toId))) {
-              sites.splice(sites.indexOf(Number(fromId)),1)
+
+          const _fromIdValue = sites.indexOf(Number(fromId))
+          const _toIdValue = sites.indexOf(Number(toId))
+
+          if (_fromIdValue > _toIdValue) {
+              sites.splice(_fromIdValue,1)
               sites.splice(sites.indexOf(Number(toId)),0,Number(fromId))
               from.parentElement.insertBefore(from,to);
           } else {
-              sites.splice(sites.indexOf(Number(fromId)),1)
+              sites.splice(_fromIdValue,1)
               sites.splice(sites.indexOf(Number(toId)) + 1,0,Number(fromId))
               from.parentElement.insertBefore(from,to.nextSibling);
           }
