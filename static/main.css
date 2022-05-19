@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2022.3.25
+# Last Update: 2022.5.19
 
 一个简洁轻巧的起始页
 
@@ -192,6 +192,7 @@ main{
 .navi-items .item{
     color: inherit;
     display: block;
+    z-index: 1;
 }
 
 .navi-search{
@@ -258,7 +259,6 @@ main{
     margin: auto;
     overflow: hidden;
     border-radius: 2em;
-    box-shadow: 0 0 0 5px rgba(255, 255, 255, .85);
     transition: box-shadow .3s;
 }
 

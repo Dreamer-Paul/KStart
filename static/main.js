@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2022.3.27
+# Last Update: 2022.5.19
 
 一个简洁轻巧的起始页
 
@@ -176,6 +176,7 @@ function KStart() {
       obj.window.item[data.window].classList.remove("active");
 
       obj.window.wrap.classList.remove("active");
+      location.reload();
     },
     closeWindow2: () => {
       if(!data.timer){
@@ -411,6 +412,50 @@ function KStart() {
         }
       };
     },
+    // 初始化公共导航列表的拖拽功能
+    initDragNavi: () => {
+      const items = obj.main.sites.childNodes
+      for (item of items){
+        item.addEventListener('dragstart', (event) => {
+          event.dataTransfer.setData("Text",event.target.getAttribute('data-id'))
+        }, null)
+        item.addEventListener('dragover', (event) => {
+          event.preventDefault()
+        }, null)
+
+        item.setAttribute('draggable', true)
+
+        item.addEventListener('drop', (event) => {
+          const fromId= event.dataTransfer.getData('Text')
+          const from = ks.select(`a[data-id='${fromId}']`)
+          const to = event.path.find(num => {
+            if (num.localName === 'a') {
+              return num
+            }
+          })
+
+          const toId = to.getAttribute('data-id')
+          const sites = data.user_set.sites;
+
+          const _fromIdValue = sites.indexOf(Number(fromId))
+          const _toIdValue = sites.indexOf(Number(toId))
+
+          if (_fromIdValue > _toIdValue) {
+              sites.splice(_fromIdValue,1)
+              sites.splice(sites.indexOf(Number(toId)),0,Number(fromId))
+              from.parentElement.insertBefore(from,to);
+          } else {
+              sites.splice(_fromIdValue,1)
+              sites.splice(sites.indexOf(Number(toId)) + 1,0,Number(fromId))
+              from.parentElement.insertBefore(from,to.nextSibling);
+          }
+
+          methods.setStorage()
+          methods.setMulSelectValue(obj.settings.sites, data.user_set.sites);
+        }, false)
+      }
+    }
+
   };
 
   modifys.initBody();
@@ -458,11 +503,11 @@ function KStart() {
     else{
       console.error("这个一般不会触发吧？");
     }
-
     data.user_set.background && modifys.checkDarkMode();
 
     modifys.changeSearch(data.user_set.search);
     modifys.initSettingForm();
+    modifys.initDragNavi();
   });
 }
 
