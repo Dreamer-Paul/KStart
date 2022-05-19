@@ -176,7 +176,6 @@ function KStart() {
       obj.window.item[data.window].classList.remove("active");
 
       obj.window.wrap.classList.remove("active");
-      location.reload();
     },
     closeWindow2: () => {
       if(!data.timer){
@@ -414,48 +413,48 @@ function KStart() {
     },
     // 初始化公共导航列表的拖拽功能
     initDragNavi: () => {
-      const items = obj.main.sites.childNodes
-      for (item of items){
-        item.addEventListener('dragstart', (event) => {
-          event.dataTransfer.setData("Text",event.target.getAttribute('data-id'))
-        }, null)
-        item.addEventListener('dragover', (event) => {
-          event.preventDefault()
-        }, null)
+      let fromEl = null;
+      let fromId = null;
 
-        item.setAttribute('draggable', true)
+      const onDragStart = ev => {
+        fromEl = ev.target;
+        fromId = ev.target.getAttribute("data-id");
+      }
 
-        item.addEventListener('drop', (event) => {
-          const fromId= event.dataTransfer.getData('Text')
-          const from = ks.select(`a[data-id='${fromId}']`)
-          const to = event.path.find(num => {
-            if (num.localName === 'a') {
-              return num
-            }
-          })
+      const onDragOver = ev => {
+        ev.preventDefault();
+      }
 
-          const toId = to.getAttribute('data-id')
-          const sites = data.user_set.sites;
+      const onDrop = ev => {
+        const to = ev.currentTarget;
 
-          const _fromIdValue = sites.indexOf(Number(fromId))
-          const _toIdValue = sites.indexOf(Number(toId))
+        const toId = to.getAttribute("data-id");
+        const set_sites = data.user_set.sites;
 
-          if (_fromIdValue > _toIdValue) {
-              sites.splice(_fromIdValue,1)
-              sites.splice(sites.indexOf(Number(toId)),0,Number(fromId))
-              from.parentElement.insertBefore(from,to);
-          } else {
-              sites.splice(_fromIdValue,1)
-              sites.splice(sites.indexOf(Number(toId)) + 1,0,Number(fromId))
-              from.parentElement.insertBefore(from,to.nextSibling);
-          }
+        const _fromIdValue = set_sites.indexOf(Number(fromId));
+        const _toIdValue = set_sites.indexOf(Number(toId));
 
-          methods.setStorage()
-          methods.setMulSelectValue(obj.settings.sites, data.user_set.sites);
-        }, false)
+        set_sites.splice(_toIdValue, 0, set_sites.splice(_fromIdValue, 1)[0]);
+
+        if (_fromIdValue > _toIdValue) {
+          fromEl.parentElement.insertBefore(fromEl, to);
+        }
+        else {
+          fromEl.parentElement.insertBefore(fromEl, to.nextSibling);
+        }
+
+        methods.setStorage();
+        methods.setMulSelectValue(obj.settings.sites, data.user_set.sites);
+      }
+
+      for (item of obj.main.sites.childNodes) {
+        item.ondragstart = onDragStart;
+        item.ondragover = onDragOver;
+        item.ondrop = onDrop;
+
+        item.setAttribute("draggable", true);
       }
     }
-
   };
 
   modifys.initBody();
@@ -467,7 +466,7 @@ function KStart() {
     const user = methods.getUser();
 
     // 读取在线或本地数据
-    if(user){
+    if (user) {
       const url = `https://dreamer-paul.github.io/KStart-Sites/${user}.json`;
 
       console.warn("Web mode");
@@ -479,11 +478,9 @@ function KStart() {
 
     console.warn("Local mode");
 
-    return false;
-  }).then((webData) => {
-    const storage = webData || methods.getStorage();
-
-    storage && methods.setUserSettings(storage);
+    return methods.getStorage();
+  }).then((userData) => {
+    userData && methods.setUserSettings(userData);
 
     const { sites, custom } = data.user_set;
 
