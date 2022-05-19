@@ -48,6 +48,7 @@ function KStart() {
   };
 
   const data = {
+    env: undefined,
     ver: "1.1.0",
     timer: "",
     window: 0,
@@ -470,13 +471,17 @@ function KStart() {
       const url = `https://dreamer-paul.github.io/KStart-Sites/${user}.json`;
 
       console.warn("Web mode");
+      data.env = "web";
 
-      modifys.hideSettingsButton();
-
-      return fetch(url).then((res) => res.json());
+      return fetch(url).then((res) => res.json()).catch(err => {
+        data.env = "local";
+        ks.notice("获取数据出错啦", { color: "red" });
+        return methods.getStorage();
+      });
     }
 
     console.warn("Local mode");
+    data.env = "local";
 
     return methods.getStorage();
   }).then((userData) => {
@@ -502,9 +507,11 @@ function KStart() {
     }
     data.user_set.background && modifys.checkDarkMode();
 
+    data.env === "web" && modifys.hideSettingsButton();
+    data.env === "local" && modifys.initDragNavi();
+
     modifys.changeSearch(data.user_set.search);
     modifys.initSettingForm();
-    modifys.initDragNavi();
   });
 }
 
