@@ -428,21 +428,19 @@ function KStart() {
               return num
             }
           })
+
           const toId = to.getAttribute('data-id')
-          const sites = data.user_set.sites
-          const _div = ks.create("div");
+          const sites = data.user_set.sites;
+          if (sites.indexOf(Number(fromId)) > sites.indexOf(Number(toId))) {
+              sites.splice(sites.indexOf(Number(fromId)),1)
+              sites.splice(sites.indexOf(Number(toId)),0,Number(fromId))
+              from.parentElement.insertBefore(from,to);
+          } else {
+              sites.splice(sites.indexOf(Number(fromId)),1)
+              sites.splice(sites.indexOf(Number(toId)) + 1,0,Number(fromId))
+              from.parentElement.insertBefore(from,to.nextSibling);
+          }
 
-          from.parentElement.insertBefore(_div,from);
-          from.parentElement.insertBefore(from,to);
-          from.parentElement.insertBefore(to,_div);
-          from.parentElement.removeChild(_div);
-
-
-          const _fromIdValue = sites.indexOf(Number(fromId))
-          const _toIdValue = sites.indexOf(Number(toId))
-          const temp = sites[_fromIdValue]
-          sites[_fromIdValue] = sites[_toIdValue]
-          sites[_toIdValue] = temp
           methods.setStorage()
           methods.setMulSelectValue(obj.settings.sites, data.user_set.sites);
         }, false)
