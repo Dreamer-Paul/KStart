@@ -105,6 +105,10 @@ header{
 header .action-btn{
     padding: 0 1em;
     cursor: pointer;
+}
+header .action-btn .fa{
+    font-size: 1.5em;
+    transition: transform .3s;
     text-shadow: var(--font-shadow);
 }
 header .action-btn:hover .fa{
@@ -118,11 +122,6 @@ header .action-btn.updated.active .fa{
 @keyframes shiny {
     from { opacity: 0 }
     to { opacity: 1 }
-}
-
-header .fa{
-    font-size: 1.5em;
-    transition: transform .3s;
 }
 
 main{
@@ -194,6 +193,7 @@ main{
 }
 
 .navi-items .item{
+    z-index: 1;
     color: inherit;
     display: block;
 }
@@ -213,7 +213,7 @@ main{
 
 .search-selector{
     top: 3em;
-    z-index: 1;
+    z-index: 2;
     opacity: 0;
     padding: .75em 0;
     overflow: hidden;
