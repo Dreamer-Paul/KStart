@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2022.5.19
+# Last Update: 2022.5.24
 
 一个简洁轻巧的起始页
 
@@ -12,6 +12,9 @@
 
 :root{
     color: #555;
+
+    --green: #158e23;
+    --primary: var(--green);
 
     --shadow: 0 0 5em rgba(0, 0, 0, .1);
     --shadow-thin: 0 0 1em rgba(0, 0, 0, .3);
@@ -94,14 +97,15 @@ header{
     right: 0;
     z-index: 1;
     display: flex;
+    padding: 1em 0;
     position: fixed;
     justify-content: flex-end;
 }
 
 header .action-btn{
-    padding: 1em;
+    padding: 0 1em;
     cursor: pointer;
-    padding-bottom: 0;
+    text-shadow: var(--font-shadow);
 }
 header .action-btn:hover .fa{
     transform: scale(1.2);
@@ -192,7 +196,6 @@ main{
 .navi-items .item{
     color: inherit;
     display: block;
-    z-index: 1;
 }
 
 .navi-search{
