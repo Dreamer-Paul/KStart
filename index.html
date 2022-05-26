@@ -14,6 +14,9 @@
 </head>
 <body>
 <header>
+    <div class="action-btn edit" ks-tag="bottom" ks-text="管理导航项">
+        <i class="fa fa-edit"></i>
+    </div>
     <div class="action-btn updated" ks-tag="bottom" ks-text="更新日志">
         <i class="fa fa-bullhorn"></i>
     </div>
@@ -132,10 +135,6 @@
                     <span>自定义背景：</span>
                     <select name="background" data-key="background_type"></select>
                 </label>
-                <label>
-                    <span>可选的预设导航项</span>
-                    <select multiple name="sites" data-key="sites" style="height: 15em"></select>
-                </label>
                 <p class="btn-group">
                     <button class="btn small primary" id="set-reset" title="重置个人设置为默认值">重置为默认</button>
                     <button class="btn small transparent" id="set-input" title="导入个人设置">导入</button>
@@ -143,6 +142,15 @@
                     <input type="file" id="set-file" hidden />
                 </p>
             </fieldset>
+        </div>
+    </section>
+    <section class="the-drawer sites">
+        <div class="drawer-head">
+            <button data-type="close">×</button>
+            <h3>管理导航项</h3>
+        </div>
+        <div class="drawer-body">
+            <div class="sites"></div>
         </div>
     </section>
 </window>

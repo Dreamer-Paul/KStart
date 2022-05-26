@@ -13,6 +13,7 @@
 function KStart() {
   const obj = {
     header: {
+      edit: ks.select(".action-btn.edit"),
       updated: ks.select(".action-btn.updated"),
       about: ks.select(".action-btn.about"),
       setting: ks.select(".action-btn.setting"),
@@ -27,7 +28,7 @@ function KStart() {
     },
     window: {
       wrap: ks.select("window"),
-      item: ks(".the-window"),
+      item: ks(".the-window, .the-drawer"),
     },
     settings: {
       search: ks.select("[name=search]"),
@@ -39,6 +40,9 @@ function KStart() {
       input: ks.select("#set-input"),
       output: ks.select("#set-output"),
       file: ks.select("#set-file"),
+    },
+    drawer: {
+      sites: ks.select(".the-drawer .sites")
     },
 
     // 不渲染的元素
@@ -221,10 +225,36 @@ function KStart() {
     hideSettingsButton: () => {
       obj.header.setting.setAttribute("hidden", "");
     },
+    editButton: () => {
+      methods.openWindow(3);
+    },
     updatedButton: () => {
       methods.openWindow(0);
       localStorage.setItem("paul-ver", data.ver);
       obj.header.updated.classList.remove("active");
+    },
+
+    // 导航项点击，创建或删除已经设置的导航项目
+    siteItemButton: (ev) => {
+      const siteID = Number(ev.target.dataset.id);
+      const siteIndex = data.user_set.sites.indexOf(siteID);
+
+      // 删除
+      if (siteIndex > -1) {
+        data.user_set.sites.splice(siteIndex, 1);
+
+        obj.main.sites.childNodes[siteIndex].remove();
+      }
+      // 添加
+      else {
+        data.user_set.sites.push(siteID);
+
+        const newSiteItem = methods.createItem(data.sites[siteID], siteID);
+
+        obj.main.sites.appendChild(newSiteItem);
+      }
+
+      methods.setStorage();
     },
 
     // 设置里面的按钮
@@ -303,6 +333,7 @@ function KStart() {
       });
 
       // 打开按钮
+      obj.header.edit.onclick = modifys.editButton;
       obj.header.updated.onclick = modifys.updatedButton;
       obj.header.about.onclick = () => {
         methods.openWindow(1);
@@ -344,6 +375,7 @@ function KStart() {
           case "text": type = "value"; break;
           case "checkbox": type = "checked"; break;
           case "select-one": type = "value"; break;
+          // ! 暂时没有使用
           case "select-multiple": type = "options"; break;
         }
 
@@ -449,12 +481,29 @@ function KStart() {
       }
 
       for (item of obj.main.sites.childNodes) {
+        if (item.dataset.id == -1) continue;
+
         item.ondragstart = onDragStart;
         item.ondragover = onDragOver;
         item.ondrop = onDrop;
 
         item.setAttribute("draggable", true);
       }
+    },
+    // 初始化抽屉里面的导航项目
+    initDrawerItems: () => {
+      data.sites.forEach((site, key) => {
+        const item = ks.create("span", {
+          text: site.name,
+          attr: {
+            name: "data-id",
+            value: key,
+          },
+          parent: obj.drawer.sites,
+        });
+
+        item.onclick = modifys.siteItemButton;
+      });
     }
   };
 
@@ -505,6 +554,7 @@ function KStart() {
     else{
       console.error("这个一般不会触发吧？");
     }
+
     data.user_set.background && modifys.checkDarkMode();
 
     data.env === "web" && modifys.hideSettingsButton();
@@ -512,6 +562,7 @@ function KStart() {
 
     modifys.changeSearch(data.user_set.search);
     modifys.initSettingForm();
+    modifys.initDrawerItems();
   });
 }
 

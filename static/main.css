@@ -402,13 +402,13 @@ window.active{
     margin-bottom: 1em;
 }
 
-.the-window .window-head{
+.the-window .window-head, .the-drawer .drawer-head{
     padding: 1em 1.5em;
     text-align: center;
     position: relative;
     box-shadow: var(--shadow);
 }
-.the-window .window-head button{
+.the-window .window-head button, .the-drawer .drawer-head button{
     top: 1rem;
     right: 1rem;
     position: absolute;
@@ -423,9 +423,55 @@ window.active{
     background: rgb(255, 86, 86);
 }
 
-.the-window .window-body{
+.the-window .window-body, .the-drawer .drawer-body{
     padding: 1.25em;
     overflow: auto;
     max-height: 80vh;
 }
-.the-window .window-body::-webkit-scrollbar{ width: 6px }
+.the-window .window-body::-webkit-scrollbar,
+.the-drawer .drawer-body::-webkit-scrollbar{
+    width: 6px;
+}
+
+.the-drawer{
+    top: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 25em;
+    transform: translateX(100%);
+    transition: transform .3s;
+    background: var(--input-bg);
+    box-shadow: var(--shadow-thick);
+}
+
+.the-drawer.active{
+    transform: translateX(0);
+}
+
+.the-drawer .drawer-body{
+    max-height: none;
+}
+
+.the-drawer.sites .sites{
+    gap: .5em;
+    display: grid;
+    user-select: none;
+    grid-template-columns: repeat(auto-fill, minmax(7em, 1fr));
+}
+
+.the-drawer.sites .sites span{
+    padding: .75em;
+    cursor: pointer;
+    border-radius: var(--radius);
+    background: rgba(0, 0, 0, .05);
+    transition: transform .3s;
+}
+.the-drawer.sites .sites span:active{
+    transform: scale(.9);
+}
