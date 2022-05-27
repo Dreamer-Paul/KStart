@@ -34,6 +34,7 @@ function KStart() {
       search: ks.select("[name=search]"),
       background: ks.select("[name=background]"),
       sites: ks.select("[name=sites]"),
+      auto_focus: ks.select("[name=auto_focus]")
     },
     settingBtn: {
       reset: ks.select("#set-reset"),
@@ -113,6 +114,7 @@ function KStart() {
     user_set: {
       search: 0,
       background: 0,
+      auto_focus: false,
       sites: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 16, 28, 31, 35],
       custom: [],
     },
@@ -361,6 +363,34 @@ function KStart() {
         obj.main.select.innerHTML = `<i class="iconfont icon-${data.search_method[key].icon}"></i>`
       }
     },
+    // 深色背景模式检测
+    checkDarkMode: () => {
+      const img = new Image();
+      img.crossOrigin = "Anonymous";
+      img.src = data.background_type[data.user_set.background].url;
+
+      // 深色背景增加深色模式
+      img.onload = () => {
+        obj.main.bg.classList.add(`type-${data.user_set.background}`);
+        obj.main.bg.style.background = `url(${img.src}) ${data.background_type[data.user_set.background].set}`;
+        obj.main.bg.classList.add("active");
+
+        const canvas = document.createElement("canvas");
+
+        const context = canvas.getContext("2d");
+        context.drawImage(img, 0, 0, img.width, img.height, 0, 0, 1, 1);
+
+        const imgData = context.getImageData(0, 0, 1, 1).data;
+
+        if(imgData[0] <= 180 || (imgData[1] <= 180) | (imgData[2] <= 180)){
+          document.body.classList.add("dark");
+        }
+      };
+    },
+    // 自动聚焦到搜索框
+    focusSearchInput: () => {
+      obj.main.input.focus();
+    },
 
     // 初始化主体的元素（不受限于用户数据）
     initBody: () => {
@@ -430,8 +460,8 @@ function KStart() {
     initSettingForm: () => {
       const set = data.user_set;
 
-      for(item in set){
-        if(!obj.settings[item]) return;
+      for (item in set) {
+        if (!obj.settings[item]) return;
 
         let type, i = item;
 
@@ -443,7 +473,7 @@ function KStart() {
           case "select-multiple": type = "options"; break;
         }
 
-        // 是下拉框，遍历生成
+        // 是下拉框，遍历生成（只有 Select 才会有 key 这个东西）
         if(obj.settings[item].type.indexOf("select") === 0 && obj.settings[item].dataset.key){
           data[obj.settings[item].dataset.key].forEach((sitem, key) => {
             ks.create("option", {
@@ -484,30 +514,6 @@ function KStart() {
       }
     },
 
-    // 深色背景模式检测
-    checkDarkMode: () => {
-      const img = new Image();
-      img.crossOrigin = "Anonymous";
-      img.src = data.background_type[data.user_set.background].url;
-
-      // 深色背景增加深色模式
-      img.onload = () => {
-        obj.main.bg.classList.add(`type-${data.user_set.background}`);
-        obj.main.bg.style.background = `url(${img.src}) ${data.background_type[data.user_set.background].set}`;
-        obj.main.bg.classList.add("active");
-
-        const canvas = document.createElement("canvas");
-
-        const context = canvas.getContext("2d");
-        context.drawImage(img, 0, 0, img.width, img.height, 0, 0, 1, 1);
-
-        const imgData = context.getImageData(0, 0, 1, 1).data;
-
-        if(imgData[0] <= 180 || (imgData[1] <= 180) | (imgData[2] <= 180)){
-          document.body.classList.add("dark");
-        }
-      };
-    },
     // 初始化公共导航列表的拖拽功能
     initDragNavi: (el) => {
       if (el.dataset.id == -1) return;
@@ -518,6 +524,7 @@ function KStart() {
 
       el.setAttribute("draggable", true);
     },
+
     // 初始化抽屉里面的导航项目
     initDrawerItems: () => {
       data.sites.forEach((site, key) => {
@@ -573,6 +580,8 @@ function KStart() {
     data.user_set.background && modifys.checkDarkMode();
 
     data.env === "web" && modifys.hideModifiedButton();
+
+    data.user_set.auto_focus && modifys.focusSearchInput();
 
     modifys.changeSearch(data.user_set.search);
     modifys.initSettingForm();
