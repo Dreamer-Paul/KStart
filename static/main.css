@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2022.5.24
+# Last Update: 2022.5.27
 
 一个简洁轻巧的起始页
 
@@ -22,6 +22,7 @@
 
     --input-bg: #fff;
     --search-bg: #fff;
+    --secondly-input-bg: rgba(0, 0, 0, .05);
 
     /* 和背景主体反过来的字体颜色 */
     --font-color: #333;
@@ -40,9 +41,14 @@
 
         --input-bg: #222;
         --search-bg: rgba(255, 255, 255, .2);
+        --secondly-input-bg: rgba(255, 255, 255, .2);
 
         --font-color: #eee;
         --font-shadow: 0 0 5px #000, 0 2px 5px #000;
+    }
+
+    blockquote{
+        background-color: var(--secondly-input-bg);
     }
 }
 
@@ -138,7 +144,7 @@ main{
     padding: .5em 1em;
     border-radius: 3em;
     background-color: #fff;
-    background-color: var(--input-bg);
+    background-color: var(--search-bg);
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
     box-shadow: var(--shadow);
     transition: box-shadow .3s;
@@ -148,10 +154,6 @@ main{
 }
 
 @media screen and (prefers-color-scheme: dark){
-    .input-box{
-        background-color: rgba(255, 255, 255, .2);
-    }
-
     .input-box input::-webkit-input-placeholder{
         color: inherit;
     }
@@ -473,7 +475,8 @@ window.active{
     padding: .75em;
     cursor: pointer;
     border-radius: var(--radius);
-    background: rgba(0, 0, 0, .05);
+    background-color: rgba(0, 0, 0, .05);
+    background-color: var(--secondly-input-bg);
     transition: transform .3s;
 }
 .the-drawer.sites .sites span:active{
