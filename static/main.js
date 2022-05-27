@@ -55,7 +55,7 @@ function KStart() {
 
   const data = {
     env: undefined,
-    ver: "1.1.0",
+    ver: "1.2.0",
     timer: "",
     window: 0,
     sites: [],
