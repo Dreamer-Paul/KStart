@@ -174,20 +174,21 @@ function KStart() {
       obj.window.wrap.classList.add("active");
       obj.window.item[key].classList.add("active");
     },
-    closeWindow: () => {
-      data.timer = clearTimeout(methods.closeWindow);
+    closeWindowStart: () => {
+      if (!data.timer) {
+        data.timer = setTimeout(methods.closeWindowEnd, 300);
+      }
+
+      obj.window.wrap.classList.remove("active");
+      obj.window.item[data.window].classList.add("closed");
+    },
+    closeWindowEnd: () => {
+      data.timer = clearTimeout(methods.closeWindowEnd);
 
       obj.window.item[data.window].classList.remove("closed");
       obj.window.item[data.window].classList.remove("active");
 
       obj.window.wrap.classList.remove("active");
-    },
-    closeWindow2: () => {
-      if(!data.timer){
-        data.timer = setTimeout(methods.closeWindow, 300);
-      }
-
-      obj.window.item[data.window].classList.add("closed");
     },
 
     // 读取表单转数组
@@ -347,7 +348,7 @@ function KStart() {
         const isCloseBtn = e.target.nodeName === "BUTTON" && e.target.dataset.type === "close";
         const isWindow = e.target == obj.window.wrap;
 
-        (isWindow || isCloseBtn) && methods.closeWindow2();
+        (isWindow || isCloseBtn) && methods.closeWindowStart();
       };
 
       // 重置按钮

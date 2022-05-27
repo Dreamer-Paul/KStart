@@ -453,6 +453,9 @@ window.active{
 .the-drawer.active{
     transform: translateX(0);
 }
+.the-drawer.closed{
+    transform: translateX(100%);
+}
 
 .the-drawer .drawer-body{
     max-height: none;
