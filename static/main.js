@@ -220,6 +220,10 @@ function KStart() {
 
   // 涉及到 DOM 交互的操作
   const modifys = {
+    // 全局委托，用于隐藏搜索下拉框
+    onBodyClick: (ev) => {
+      ev.target.className !== "search-select" && obj.main.search.classList.remove("active");
+    },
     // 搜索里面的按钮
     selectSearchButton: () => {
       const { search } = obj.main;
@@ -354,9 +358,6 @@ function KStart() {
 
     // 修改搜索方式
     changeSearch: (key) => {
-      const { search } = obj.main;
-
-      search.classList.remove("active");
       data.user_set.search = key;
 
       if(data.search_method[key].icon){
@@ -394,6 +395,9 @@ function KStart() {
 
     // 初始化主体的元素（不受限于用户数据）
     initBody: () => {
+      // 全局委托，用于隐藏搜索下拉框
+      document.body.onclick = modifys.onBodyClick;
+
       // 搜索
       obj.main.select.onclick = modifys.selectSearchButton;
       obj.main.submit.onclick = modifys.submitSearchButton;
