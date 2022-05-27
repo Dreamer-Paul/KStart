@@ -48,6 +48,7 @@ function KStart() {
     // 不渲染的元素
     _internal: {
       link: ks.create("a"),
+      dragFrom: null
     },
   };
 
@@ -148,7 +149,7 @@ function KStart() {
       const icon = item.icon ? `<i class="${item.icon}"></i>` : item.name.substr(0, 1);
       const color = item.color || Math.random().toString(16).substring(-6);
 
-      return ks.create("a", {
+      const el = ks.create("a", {
         href: item.url,
         class: "item",
         attr: [
@@ -168,6 +169,10 @@ function KStart() {
           <p class="navi-title">${item.name}</p>`
         )
       });
+
+      data.env === "local" && modifys.initDragNavi(el);
+
+      return el;
     },
 
     // 弹窗和抽屉
@@ -225,7 +230,8 @@ function KStart() {
     },
 
     // 右上方的按钮
-    hideSettingsButton: () => {
+    hideModifiedButton: () => {
+      obj.header.edit.setAttribute("hidden", "");
       obj.header.setting.setAttribute("hidden", "");
     },
     editButton: () => {
@@ -248,6 +254,8 @@ function KStart() {
       const siteID = Number(ev.target.dataset.id);
       const siteIndex = data.user_set.sites.indexOf(siteID);
 
+      ev.target.classList.toggle("active");
+
       // 删除
       if (siteIndex > -1) {
         data.user_set.sites.splice(siteIndex, 1);
@@ -258,7 +266,7 @@ function KStart() {
       else {
         data.user_set.sites.push(siteID);
 
-        const newSiteItem = methods.createNaviItem(data.sites[siteID], siteID);
+        const newSiteItem = methods.createNaviItem(data.sites[siteID], siteID, true);
 
         obj.main.sites.appendChild(newSiteItem);
       }
@@ -313,6 +321,35 @@ function KStart() {
       });
     },
 
+    // 拖拽导航项目
+    onNaviDragStart: (ev) => {
+      obj._internal.dragFrom = ev.target;
+    },
+    onNaviDragOver: (ev) => {
+      ev.preventDefault();
+    },
+    onNaviDrop: (ev) => {
+      const from = obj._internal.dragFrom;
+      const to = ev.currentTarget;
+
+      const toId = to.getAttribute("data-id");
+      const set_sites = data.user_set.sites;
+
+      const _fromIdValue = set_sites.indexOf(Number(from.getAttribute("data-id")));
+      const _toIdValue = set_sites.indexOf(Number(toId));
+
+      set_sites.splice(_toIdValue, 0, set_sites.splice(_fromIdValue, 1)[0]);
+
+      if (_fromIdValue > _toIdValue) {
+        from.parentElement.insertBefore(from, to);
+      }
+      else {
+        from.parentElement.insertBefore(from, to.nextSibling);
+      }
+
+      methods.setStorage();
+    },
+
     // 修改搜索方式
     changeSearch: (key) => {
       const { search } = obj.main;
@@ -332,13 +369,13 @@ function KStart() {
       obj.main.submit.onclick = modifys.submitSearchButton;
 
       data.search_method.forEach((item, key) => {
-        const a = ks.create("div", {
+        const el = ks.create("div", {
           class: "item",
           html: `<i class="iconfont icon-${item.icon}"></i>${item.name}`,
           parent: obj.main.search
         });
 
-        a.onclick = () => modifys.changeSearch(key);
+        el.onclick = () => modifys.changeSearch(key);
       });
 
       // 打开按钮
@@ -472,49 +509,14 @@ function KStart() {
       };
     },
     // 初始化公共导航列表的拖拽功能
-    initDragNavi: () => {
-      let fromEl = null;
-      let fromId = null;
+    initDragNavi: (el) => {
+      if (el.dataset.id == -1) return;
 
-      const onDragStart = ev => {
-        fromEl = ev.target;
-        fromId = ev.target.getAttribute("data-id");
-      }
+      el.ondragstart = modifys.onNaviDragStart;
+      el.ondragover = modifys.onNaviDragOver;
+      el.ondrop = modifys.onNaviDrop;
 
-      const onDragOver = ev => {
-        ev.preventDefault();
-      }
-
-      const onDrop = ev => {
-        const to = ev.currentTarget;
-
-        const toId = to.getAttribute("data-id");
-        const set_sites = data.user_set.sites;
-
-        const _fromIdValue = set_sites.indexOf(Number(fromId));
-        const _toIdValue = set_sites.indexOf(Number(toId));
-
-        set_sites.splice(_toIdValue, 0, set_sites.splice(_fromIdValue, 1)[0]);
-
-        if (_fromIdValue > _toIdValue) {
-          fromEl.parentElement.insertBefore(fromEl, to);
-        }
-        else {
-          fromEl.parentElement.insertBefore(fromEl, to.nextSibling);
-        }
-
-        methods.setStorage();
-      }
-
-      for (item of obj.main.sites.childNodes) {
-        if (item.dataset.id == -1) continue;
-
-        item.ondragstart = onDragStart;
-        item.ondragover = onDragOver;
-        item.ondrop = onDrop;
-
-        item.setAttribute("draggable", true);
-      }
+      el.setAttribute("draggable", true);
     },
     // 初始化抽屉里面的导航项目
     initDrawerItems: () => {
@@ -527,6 +529,10 @@ function KStart() {
           },
           parent: obj.drawer.sites,
         });
+
+        if (data.user_set.sites.includes(key)) {
+          item.classList.add("active");
+        }
 
         item.onclick = modifys.siteItemButton;
       });
@@ -566,8 +572,7 @@ function KStart() {
 
     data.user_set.background && modifys.checkDarkMode();
 
-    data.env === "web" && modifys.hideSettingsButton();
-    data.env === "local" && modifys.initDragNavi();
+    data.env === "web" && modifys.hideModifiedButton();
 
     modifys.changeSearch(data.user_set.search);
     modifys.initSettingForm();

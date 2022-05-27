@@ -465,6 +465,7 @@ window.active{
     gap: .5em;
     display: grid;
     user-select: none;
+    margin-bottom: 3em;
     grid-template-columns: repeat(auto-fill, minmax(7em, 1fr));
 }
 
@@ -477,4 +478,15 @@ window.active{
 }
 .the-drawer.sites .sites span:active{
     transform: scale(.9);
+}
+
+.the-drawer.sites .sites span.active{
+    color: #fff;
+    background-color: var(--primary);
+}
+
+.the-drawer.sites .add-sites{
+    opacity: .6;
+    font-size: .875em;
+    text-align: center;
 }
