@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2022.5.19
+# Last Update: 2022.5.28
 
 一个简洁轻巧的起始页
 
@@ -200,6 +200,13 @@ function KStart() {
       obj.window.wrap.classList.remove("active");
     },
 
+    // 数字字符串转数字
+    parseValue: (value) => {
+      const _checkNumber = Number(value);
+
+      return isNaN(_checkNumber) ? value : _checkNumber;
+    },
+
     // 读取表单转数组
     getMulSelectValue: (el) => {
       let selected = [];
@@ -364,8 +371,14 @@ function KStart() {
         obj.main.select.innerHTML = `<i class="iconfont icon-${data.search_method[key].icon}"></i>`
       }
     },
-    // 深色背景模式检测
-    checkDarkMode: () => {
+    // 初始化背景和深色背景模式检测
+    initBackground: () => {
+      if (data.user_set.background == 0) {
+        obj.main.bg.style = "";
+
+        return;
+      }
+
       const img = new Image();
       img.crossOrigin = "Anonymous";
       img.src = data.background_type[data.user_set.background].url;
@@ -383,14 +396,27 @@ function KStart() {
 
         const imgData = context.getImageData(0, 0, 1, 1).data;
 
-        if(imgData[0] <= 180 || (imgData[1] <= 180) | (imgData[2] <= 180)){
+        if (imgData[0] <= 180 || (imgData[1] <= 180) | (imgData[2] <= 180)) {
           document.body.classList.add("dark");
+        }
+        else {
+          document.body.classList.remove("dark");
         }
       };
     },
     // 自动聚焦到搜索框
     focusSearchInput: () => {
       obj.main.input.focus();
+    },
+
+    // 设置项被修改
+    onSettingChange: (name) => {
+      if (name === "background") {
+        modifys.initBackground();
+      }
+      else if (name === "search") {
+        ks.notice("默认搜索引擎已修改，刷新后生效", { color: "green", time: 3000 });
+      }
     },
 
     // 初始化主体的元素（不受限于用户数据）
@@ -469,7 +495,7 @@ function KStart() {
 
         let type, i = item;
 
-        switch(obj.settings[item].type){
+        switch (obj.settings[item].type) {
           case "text": type = "value"; break;
           case "checkbox": type = "checked"; break;
           case "select-one": type = "value"; break;
@@ -478,7 +504,7 @@ function KStart() {
         }
 
         // 是下拉框，遍历生成（只有 Select 才会有 key 这个东西）
-        if(obj.settings[item].type.indexOf("select") === 0 && obj.settings[item].dataset.key){
+        if (obj.settings[item].type.indexOf("select") === 0 && obj.settings[item].dataset.key) {
           data[obj.settings[item].dataset.key].forEach((sitem, key) => {
             ks.create("option", {
               text: sitem.name,
@@ -491,28 +517,28 @@ function KStart() {
           });
         }
 
-        if(type !== "options"){
+        // Input / Checkbox / Select
+        if (type !== "options") {
           obj.settings[item][type] = set[item];
 
           obj.settings[item].onchange = (ev) => {
-            data.user_set[i] = ev.target[type];
+            data.user_set[i] = methods.parseValue(ev.target[type]);
 
             methods.setStorage();
-
-            ks.notice("设置已保存至本地！", { color: "green", time: 3000 });
+            modifys.onSettingChange(i);
           };
         }
-        else{
+        // Multiple Select
+        else {
           // 设置表单
           methods.setMulSelectValue(obj.settings[item], set[item]);
 
           obj.settings[item].onchange = () => {
             // 读取表单
-            data.user_set[i] = methods.getMulSelectValue(obj.settings[i]);
+            data.user_set[i] = methods.parseValue(methods.getMulSelectValue(obj.settings[i]));
 
             methods.setStorage();
-
-            ks.notice("设置已保存至本地！", { color: "green", time: 3000 });
+            modifys.onSettingChange(i);
           };
         }
       }
@@ -580,8 +606,7 @@ function KStart() {
     userData && methods.setUserSettings(userData);
 
     modifys.initNavi();
-
-    data.user_set.background && modifys.checkDarkMode();
+    modifys.initBackground();
 
     data.env === "web" && modifys.hideModifiedButton();
 
