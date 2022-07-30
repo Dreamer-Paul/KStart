@@ -1,277 +1,277 @@
 [
-    {
-        "name": "翻译",
-        "url": "https://fanyi.baidu.com",
-        "icon": "fa fa-language",
-        "color": "4395ff"
-    },
-    {
-        "name": "京东",
-        "url": "https://www.jd.com",
-        "icon": "iconfont icon-jd",
-        "color": "d92610"
-    },
-    {
-        "name": "淘宝",
-        "url": "https://www.taobao.com",
-        "icon": "iconfont icon-taobao",
-        "color": "ff8300"
-    },
-    {
-        "name": "贴吧",
-        "url": "https://tieba.baidu.com",
-        "icon": "iconfont icon-tieba",
-        "color": "3385ff"
-    },
-    {
-        "name": "微博",
-        "url": "https://weibo.com",
-        "color": "fa2f2f",
-        "icon": "iconfont icon-weibo"
-    },
-    {
-        "name": "哔哩哔哩",
-        "url": "https://www.bilibili.com",
-        "icon": "iconfont icon-bili",
-        "color": "00a1d6"
-    },
-    {
-        "name": "QQ 邮箱",
-        "url": "https://mail.qq.com",
-        "icon": "iconfont icon-qqmail",
-        "color": "4d7be6"
-    },
-    {
-        "name": "网易邮箱",
-        "url": "https://mail.126.com",
-        "icon": "iconfont icon-netease",
-        "color": "15943b"
-    },
-    {
-        "name": "GitHub",
-        "url": "https://github.com",
-        "icon": "fa fa-github",
-        "color": "555"
-    },
-    {
-        "name": "IT 之家",
-        "url": "https://www.ithome.com",
-        "color": "d22222",
-        "icon": "iconfont icon-ithome"
-    },
-    {
-        "name": "V2EX",
-        "url": "https://v2ex.com",
-        "color": "ccc",
-        "icon": "iconfont icon-v2ex"
-    },
-    {
-        "name": "优酷",
-        "url": "https://www.youku.com",
-        "color": "00b7ff",
-        "icon": "iconfont icon-youku"
-    },
-    {
-        "name": "爱奇艺",
-        "url": "https://www.iqiyi.com",
-        "color": "00be06",
-        "icon": "iconfont icon-iqiyi"
-    },
-    {
-        "name": "阿里云",
-        "url": "https://www.aliyun.com",
-        "color": "ff6a00",
-        "icon": "iconfont icon-aliyun"
-    },
-    {
-        "name": "百度地图",
-        "url": "https://maps.baidu.com",
-        "color": "8bc34a",
-        "icon": "fa fa-map"
-    },
-    {
-        "name": "CloudFlare",
-        "url": "https://www.cloudflare.com",
-        "color": "f38020",
-        "icon": "iconfont icon-cloudflare"
-    },
-    {
-        "name": "知乎",
-        "url": "https://www.zhihu.com",
-        "color": "0084ff",
-        "icon": "iconfont icon-zhihu"
-    },
-    {
-        "name": "少数派",
-        "url": "https://sspai.com",
-        "color": "c13032",
-        "icon": "iconfont icon-sspai"
-    },
-    {
-        "name": "掘金",
-        "url": "https://juejin.im",
-        "color": "007fff",
-        "icon": "iconfont icon-juejin"
-    },
-    {
-        "name": "思否",
-        "url": "https://segmentfault.com",
-        "color": "009a61",
-        "icon": "iconfont icon-segmentf"
-    },
-    {
-        "name": "腾讯视频",
-        "url": "https://v.qq.com",
-        "color": "a9e652",
-        "icon": "iconfont icon-tencent-video"
-    },
-    {
-        "name": "ACFun",
-        "url": "https://www.acfun.cn",
-        "color": "fd4c5d",
-        "icon": "iconfont icon-acfun"
-    },
-    {
-        "name": "Pixiv",
-        "url": "https://www.pixiv.net",
-        "color": "0096fa",
-        "icon": "iconfont icon-pixiv"
-    },
-    {
-        "name": "TinyPNG",
-        "url": "https://tinypng.com",
-        "color": "8cc938",
-        "icon": "iconfont icon-bear"
-    },
-    {
-        "name": "JSFiddle",
-        "url": "https://jsfiddle.net/",
-        "color": "2e71ff",
-        "icon": "iconfont icon-jsf"
-    },
-    {
-        "name": "MDN",
-        "url": "https://developer.mozilla.org/zh-CN",
-        "color": "83d0f2",
-        "icon": "iconfont icon-mdn"
-    },
-    {
-        "name": "腾讯课堂",
-        "url": "https://ke.qq.com",
-        "color": "23b8ff",
-        "icon": "iconfont icon-tencent-ke"
-    },
-    {
-        "name": "网易云课堂",
-        "url": "https://developer.mozilla.org/zh-CN",
-        "color": "49af4f",
-        "icon": "iconfont icon-netease-ke"
-    },
-    {
-        "name": "搜狐",
-        "url": "https://www.sohu.com",
-        "color": "fdd000",
-        "icon": "iconfont icon-sohu"
-    },
-    {
-        "name": "网易",
-        "url": "https://www.163.com",
-        "color": "c4282b",
-        "icon": "iconfont icon-netease"
-    },
-    {
-        "name": "GetJS",
-        "url": "https://get.js.org",
-        "color": "55607f",
-        "icon": "iconfont icon-getjs"
-    },
-    {
-        "name": "12306",
-        "url": "https://www.12306.cn",
-        "color": "ff2603",
-        "icon": "iconfont icon-12306"
-    },
-    {
-        "name": "58 同城",
-        "url": "https://58.com",
-        "color": "0091d7",
-        "icon": "iconfont icon-58"
-    },
-    {
-        "name": "金山文档",
-        "url": "https://kdocs.cn",
-        "color": "417ff9",
-        "icon": "iconfont icon-kdocs"
-    },
-    {
-        "name": "什么值得买",
-        "url": "https://www.smzdm.com",
-        "color": "e82b2b",
-        "icon": "iconfont icon-smzdm"
-    },
-    {
-        "name": "百度云盘",
-        "url": "https://pan.baidu.com",
-        "color": "3b8bfe",
-        "icon": "iconfont icon-baiduyun"
-    },
-    {
-        "name": "OneDrive",
-        "url": "https://onedrive.live.com",
-        "color": "28a8ea",
-        "icon": "iconfont icon-onedrive"
-    },
-    {
-        "name": "谷歌云盘",
-        "url": "https://drive.google.com",
-        "color": "777",
-        "icon": "iconfont icon-google-drive"
-    },
-    {
-        "name": "萌娘百科",
-        "url": "https://zh.moegirl.org",
-        "color": "018c03",
-        "icon": "iconfont icon-moegirl"
-    },
-    {
-        "name": "半次元",
-        "url": "https://bcy.net",
-        "color": "fa4b8b",
-        "icon": "iconfont icon-bcy"
-    },
-    {
-        "name": "番组计划",
-        "url": "https://bangumi.tv",
-        "color": "f09199"
-    },
-    {
-        "name": "班图剪贴板",
-        "url": "https://pastebin.ubuntu.com",
-        "color": "dd4814",
-        "icon": "iconfont icon-ubuntu"
-    },
-    {
-        "name": "IconFont",
-        "url": "https://www.iconfont.cn",
-        "color": "ea4519",
-        "icon": "iconfont icon-iconfont"
-    },
-    {
-        "name": "站酷",
-        "url": "https://www.zcool.com.cn",
-        "color": "ffe300",
-        "icon": "iconfont icon-zcool"
-    },
-    {
-        "name": "UI 中国",
-        "url": "https://www.ui.cn",
-        "color": "3d7eff",
-        "icon": "iconfont icon-uizg"
-    },
-    {
-        "name": "Dribbble",
-        "url": "https://dribbble.com",
-        "color": "ea4c89",
-        "icon": "fa fa-dribbble"
-    }
+  {
+    "name": "翻译",
+    "url": "https://fanyi.baidu.com",
+    "icon": "fa fa-language",
+    "color": "4395ff"
+  },
+  {
+    "name": "京东",
+    "url": "https://www.jd.com",
+    "icon": "iconfont icon-jd",
+    "color": "d92610"
+  },
+  {
+    "name": "淘宝",
+    "url": "https://www.taobao.com",
+    "icon": "iconfont icon-taobao",
+    "color": "ff8300"
+  },
+  {
+    "name": "贴吧",
+    "url": "https://tieba.baidu.com",
+    "icon": "iconfont icon-tieba",
+    "color": "3385ff"
+  },
+  {
+    "name": "微博",
+    "url": "https://weibo.com",
+    "color": "fa2f2f",
+    "icon": "iconfont icon-weibo"
+  },
+  {
+    "name": "哔哩哔哩",
+    "url": "https://www.bilibili.com",
+    "icon": "iconfont icon-bili",
+    "color": "00a1d6"
+  },
+  {
+    "name": "QQ 邮箱",
+    "url": "https://mail.qq.com",
+    "icon": "iconfont icon-qqmail",
+    "color": "4d7be6"
+  },
+  {
+    "name": "网易邮箱",
+    "url": "https://mail.126.com",
+    "icon": "iconfont icon-netease",
+    "color": "15943b"
+  },
+  {
+    "name": "GitHub",
+    "url": "https://github.com",
+    "icon": "fa fa-github",
+    "color": "555"
+  },
+  {
+    "name": "IT 之家",
+    "url": "https://www.ithome.com",
+    "color": "d22222",
+    "icon": "iconfont icon-ithome"
+  },
+  {
+    "name": "V2EX",
+    "url": "https://v2ex.com",
+    "color": "ccc",
+    "icon": "iconfont icon-v2ex"
+  },
+  {
+    "name": "优酷",
+    "url": "https://www.youku.com",
+    "color": "00b7ff",
+    "icon": "iconfont icon-youku"
+  },
+  {
+    "name": "爱奇艺",
+    "url": "https://www.iqiyi.com",
+    "color": "00be06",
+    "icon": "iconfont icon-iqiyi"
+  },
+  {
+    "name": "阿里云",
+    "url": "https://www.aliyun.com",
+    "color": "ff6a00",
+    "icon": "iconfont icon-aliyun"
+  },
+  {
+    "name": "百度地图",
+    "url": "https://maps.baidu.com",
+    "color": "8bc34a",
+    "icon": "fa fa-map"
+  },
+  {
+    "name": "CloudFlare",
+    "url": "https://www.cloudflare.com",
+    "color": "f38020",
+    "icon": "iconfont icon-cloudflare"
+  },
+  {
+    "name": "知乎",
+    "url": "https://www.zhihu.com",
+    "color": "0084ff",
+    "icon": "iconfont icon-zhihu"
+  },
+  {
+    "name": "少数派",
+    "url": "https://sspai.com",
+    "color": "c13032",
+    "icon": "iconfont icon-sspai"
+  },
+  {
+    "name": "掘金",
+    "url": "https://juejin.im",
+    "color": "007fff",
+    "icon": "iconfont icon-juejin"
+  },
+  {
+    "name": "思否",
+    "url": "https://segmentfault.com",
+    "color": "009a61",
+    "icon": "iconfont icon-segmentf"
+  },
+  {
+    "name": "腾讯视频",
+    "url": "https://v.qq.com",
+    "color": "a9e652",
+    "icon": "iconfont icon-tencent-video"
+  },
+  {
+    "name": "ACFun",
+    "url": "https://www.acfun.cn",
+    "color": "fd4c5d",
+    "icon": "iconfont icon-acfun"
+  },
+  {
+    "name": "Pixiv",
+    "url": "https://www.pixiv.net",
+    "color": "0096fa",
+    "icon": "iconfont icon-pixiv"
+  },
+  {
+    "name": "TinyPNG",
+    "url": "https://tinypng.com",
+    "color": "8cc938",
+    "icon": "iconfont icon-bear"
+  },
+  {
+    "name": "JSFiddle",
+    "url": "https://jsfiddle.net/",
+    "color": "2e71ff",
+    "icon": "iconfont icon-jsf"
+  },
+  {
+    "name": "MDN",
+    "url": "https://developer.mozilla.org/zh-CN",
+    "color": "83d0f2",
+    "icon": "iconfont icon-mdn"
+  },
+  {
+    "name": "腾讯课堂",
+    "url": "https://ke.qq.com",
+    "color": "23b8ff",
+    "icon": "iconfont icon-tencent-ke"
+  },
+  {
+    "name": "网易云课堂",
+    "url": "https://developer.mozilla.org/zh-CN",
+    "color": "49af4f",
+    "icon": "iconfont icon-netease-ke"
+  },
+  {
+    "name": "搜狐",
+    "url": "https://www.sohu.com",
+    "color": "fdd000",
+    "icon": "iconfont icon-sohu"
+  },
+  {
+    "name": "网易",
+    "url": "https://www.163.com",
+    "color": "c4282b",
+    "icon": "iconfont icon-netease"
+  },
+  {
+    "name": "GetJS",
+    "url": "https://get.js.org",
+    "color": "55607f",
+    "icon": "iconfont icon-getjs"
+  },
+  {
+    "name": "12306",
+    "url": "https://www.12306.cn",
+    "color": "ff2603",
+    "icon": "iconfont icon-12306"
+  },
+  {
+    "name": "58 同城",
+    "url": "https://58.com",
+    "color": "0091d7",
+    "icon": "iconfont icon-58"
+  },
+  {
+    "name": "金山文档",
+    "url": "https://kdocs.cn",
+    "color": "417ff9",
+    "icon": "iconfont icon-kdocs"
+  },
+  {
+    "name": "什么值得买",
+    "url": "https://www.smzdm.com",
+    "color": "e82b2b",
+    "icon": "iconfont icon-smzdm"
+  },
+  {
+    "name": "百度云盘",
+    "url": "https://pan.baidu.com",
+    "color": "3b8bfe",
+    "icon": "iconfont icon-baiduyun"
+  },
+  {
+    "name": "OneDrive",
+    "url": "https://onedrive.live.com",
+    "color": "28a8ea",
+    "icon": "iconfont icon-onedrive"
+  },
+  {
+    "name": "谷歌云盘",
+    "url": "https://drive.google.com",
+    "color": "777",
+    "icon": "iconfont icon-google-drive"
+  },
+  {
+    "name": "萌娘百科",
+    "url": "https://zh.moegirl.org",
+    "color": "018c03",
+    "icon": "iconfont icon-moegirl"
+  },
+  {
+    "name": "半次元",
+    "url": "https://bcy.net",
+    "color": "fa4b8b",
+    "icon": "iconfont icon-bcy"
+  },
+  {
+    "name": "番组计划",
+    "url": "https://bangumi.tv",
+    "color": "f09199"
+  },
+  {
+    "name": "班图剪贴板",
+    "url": "https://pastebin.ubuntu.com",
+    "color": "dd4814",
+    "icon": "iconfont icon-ubuntu"
+  },
+  {
+    "name": "IconFont",
+    "url": "https://www.iconfont.cn",
+    "color": "ea4519",
+    "icon": "iconfont icon-iconfont"
+  },
+  {
+    "name": "站酷",
+    "url": "https://www.zcool.com.cn",
+    "color": "ffe300",
+    "icon": "iconfont icon-zcool"
+  },
+  {
+    "name": "UI 中国",
+    "url": "https://www.ui.cn",
+    "color": "3d7eff",
+    "icon": "iconfont icon-uizg"
+  },
+  {
+    "name": "Dribbble",
+    "url": "https://dribbble.com",
+    "color": "ea4c89",
+    "icon": "fa fa-dribbble"
+  }
 ]

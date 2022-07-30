@@ -11,67 +11,67 @@
 ---- */
 
 :root{
-    color: #555;
+  color: #555;
 
-    --green: #158e23;
-    --primary: var(--green);
+  --green: #158e23;
+  --primary: var(--green);
 
-    --shadow: 0 0 5em rgba(0, 0, 0, .1);
-    --shadow-thin: 0 0 1em rgba(0, 0, 0, .3);
-    --shadow-thick: 0 0 5em rgba(0, 0, 0, .2);
+  --shadow: 0 0 5em rgba(0, 0, 0, .1);
+  --shadow-thin: 0 0 1em rgba(0, 0, 0, .3);
+  --shadow-thick: 0 0 5em rgba(0, 0, 0, .2);
 
-    --input-bg: #fff;
-    --search-bg: #fff;
-    --secondly-input-bg: rgba(0, 0, 0, .05);
+  --input-bg: #fff;
+  --search-bg: #fff;
+  --secondly-input-bg: rgba(0, 0, 0, .05);
 
-    /* 和背景主体反过来的字体颜色 */
-    --font-color: #333;
-    --font-shadow: 0 0 5px #fff, 0 2px 5px #fff;
+  /* 和背景主体反过来的字体颜色 */
+  --font-color: #333;
+  --font-shadow: 0 0 5px #fff, 0 2px 5px #fff;
 }
 
 @media screen and (prefers-color-scheme: dark){
-    :root{
-        color: #ccc;
-        background-color: #222;
+  :root{
+    color: #ccc;
+    background-color: #222;
 
-        --gray: #555;
-        --shadow: 0 0 5em rgba(255, 255, 255, .1);
-        --shadow-thin: 0 0 1em rgba(255, 255, 255, .3);
-        --shadow-thick: 0 0 5em rgba(255, 255, 255, .2);
+    --gray: #555;
+    --shadow: 0 0 5em rgba(255, 255, 255, .1);
+    --shadow-thin: 0 0 1em rgba(255, 255, 255, .3);
+    --shadow-thick: 0 0 5em rgba(255, 255, 255, .2);
 
-        --input-bg: #222;
-        --search-bg: rgba(255, 255, 255, .2);
-        --secondly-input-bg: rgba(255, 255, 255, .2);
+    --input-bg: #222;
+    --search-bg: rgba(255, 255, 255, .2);
+    --secondly-input-bg: rgba(255, 255, 255, .2);
 
-        --font-color: #eee;
-        --font-shadow: 0 0 5px #000, 0 2px 5px #000;
-    }
+    --font-color: #eee;
+    --font-shadow: 0 0 5px #000, 0 2px 5px #000;
+  }
 
-    blockquote{
-        background-color: var(--secondly-input-bg);
-    }
+  blockquote{
+    background-color: var(--secondly-input-bg);
+  }
 }
 
 html, body{
-    height: 100%;
+  height: 100%;
 }
 
 body{
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 body.dark{
-    color: #fff;
+  color: #fff;
 
-    --font-shadow: 0 0 5px #000, 0 2px 5px #000;
+  --font-shadow: 0 0 5px #000, 0 2px 5px #000;
 }
 
 .iconfont{
-    font: inherit;
+  font: inherit;
 }
 
 h3{
-    font-weight: lighter;
+  font-weight: lighter;
 }
 
 article h3{ margin-top: 2em }
@@ -80,417 +80,429 @@ article h3:first-child{ margin-top: 0 }
 article img{ border-radius: 1em }
 
 .btn{
-    transition: opacity .3s, box-shadow .3s;
+  transition: opacity .3s, box-shadow .3s;
 }
 .btn:active{
-    opacity: .9;
+  opacity: .9;
 }
 
 .btn.primary{
-    color: #fff;
-    background-color: var(--primary);
+  color: #fff;
+  background-color: var(--primary);
 }
 
 .btn-group{
-    gap: .5em;
-    display: flex;
-    flex-wrap: wrap;
+  gap: .5em;
+  display: flex;
+  flex-wrap: wrap;
 }
 
+/*
+  页眉
+*/
 header{
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    display: flex;
-    padding: 1em 0;
-    position: fixed;
-    justify-content: flex-end;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  padding: 1em 0;
+  position: fixed;
+  justify-content: flex-end;
 }
 
 header .action-btn{
-    padding: 0 1em;
-    cursor: pointer;
+  padding: 0 1em;
+  cursor: pointer;
 }
 header .action-btn .fa{
-    font-size: 1.5em;
-    transition: transform .3s;
-    text-shadow: var(--font-shadow);
+  font-size: 1.5em;
+  transition: transform .3s;
+  text-shadow: var(--font-shadow);
 }
 header .action-btn:hover .fa{
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 header .action-btn.updated.active .fa{
-    animation: shiny .5s alternate infinite;
+  animation: shiny .5s alternate infinite;
 }
 
 @keyframes shiny {
-    from { opacity: 0 }
-    to { opacity: 1 }
+  from { opacity: 0 }
+  to { opacity: 1 }
 }
 
+/*
+  内容
+*/
 main{
-    width: 100%;
-    margin: auto;
-    padding: 5em 1.75em;
-    max-width: 60em;
+  width: 100%;
+  margin: auto;
+  padding: 5em 1.75em;
+  max-width: 60em;
 }
 
 .input-box{
-    display: flex;
-    color: var(--font-color);
-    position: relative;
-    padding: .5em 1em;
-    border-radius: 3em;
-    background-color: #fff;
-    background-color: var(--search-bg);
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
-    box-shadow: var(--shadow);
-    transition: box-shadow .3s;
+  display: flex;
+  color: var(--font-color);
+  position: relative;
+  padding: .5em 1em;
+  border-radius: 3em;
+  background-color: #fff;
+  background-color: var(--search-bg);
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
+  box-shadow: var(--shadow);
+  transition: box-shadow .3s;
 }
 .input-box:hover{
-    box-shadow: var(--shadow-thick);
+  box-shadow: var(--shadow-thick);
 }
 
 @media screen and (prefers-color-scheme: dark){
-    .input-box input::-webkit-input-placeholder{
-        color: inherit;
-    }
+  .input-box input::-webkit-input-placeholder{
+    color: inherit;
+  }
 
-    .input-box input:-ms-input-placeholder{
-        color: inherit;
-    }
+  .input-box input:-ms-input-placeholder{
+    color: inherit;
+  }
 
-    .input-box input::placeholder{
-        color: inherit;
-    }
+  .input-box input::placeholder{
+    color: inherit;
+  }
 
-    .navi-icon{
-        filter: brightness(.7);
-    }
+  .navi-icon{
+    filter: brightness(.7);
+  }
 }
 
 .input-box input{
-    flex: 1 1 auto;
-    max-width: 100%;
-    border-radius: 0;
-    border: none;
-    margin: 0 1em;
-    background-color: transparent;
+  flex: 1 1 auto;
+  max-width: 100%;
+  border-radius: 0;
+  border: none;
+  margin: 0 1em;
+  background-color: transparent;
 }
 
 .navi-items{
-    display: grid;
-    grid-gap: 2em;
-    text-align: center;
-    grid-template-columns: repeat(auto-fill, minmax(5em, 1fr));
+  display: grid;
+  grid-gap: 2em;
+  text-align: center;
+  grid-template-columns: repeat(auto-fill, minmax(5em, 1fr));
 }
 
 @media screen and (max-width: 768px){
-    .navi-items{
-        grid-gap: 2em 1.5em;
-        grid-template-columns: repeat(auto-fill, minmax(4em, 1fr));
-    }
+  .navi-items{
+    grid-gap: 2em 1.5em;
+    grid-template-columns: repeat(auto-fill, minmax(4em, 1fr));
+  }
 }
 
 .navi-items .item{
-    z-index: 1;
-    color: inherit;
-    display: block;
+  z-index: 1;
+  color: inherit;
+  display: block;
 }
 
 .navi-search{
-    margin-bottom: 5em;
+  margin-bottom: 5em;
 }
 
 .search-select{
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .search-select .iconfont{
-    font-size: 1.5em;
-    line-height: 2.5rem;
-    pointer-events: none;
+  font-size: 1.5em;
+  line-height: 2.5rem;
+  pointer-events: none;
 }
 
 .search-selector{
-    top: 3em;
-    z-index: 2;
-    opacity: 0;
-    padding: .75em 0;
-    overflow: hidden;
-    visibility: hidden;
-    position: absolute;
-    background-color: #fff;
-    background-color: var(--input-bg);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    transform: scale(1, 0);
-    transform-origin: top center;
-    transition: opacity .3s, transform .3s, visibility .3s;
+  top: 3em;
+  z-index: 2;
+  opacity: 0;
+  padding: .75em 0;
+  overflow: hidden;
+  visibility: hidden;
+  position: absolute;
+  background-color: #fff;
+  background-color: var(--input-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transform: scale(1, 0);
+  transform-origin: top center;
+  transition: opacity .3s, transform .3s, visibility .3s;
 }
 
 .search-selector.active{
-    opacity: 1;
-    visibility: visible;
-    transform: scale(1);
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
 }
 
 .search-selector .iconfont{
-    opacity: .5;
-    margin-right: .75em;
+  opacity: .5;
+  margin-right: .75em;
 }
 
 .search-selector .item{
-    cursor: pointer;
-    padding: .5em 1em;
-    transition: color .3s, background-color .3s;
+  cursor: pointer;
+  padding: .5em 1em;
+  transition: color .3s, background-color .3s;
 }
 .search-selector .item:hover{
-    color: #fff;
-    background-color: #3498db;
-    background-color: var(--primary);
+  color: #fff;
+  background-color: #3498db;
+  background-color: var(--primary);
 }
 
 .navi-icon{
-    color: #fff;
-    background-color: #666;
+  color: #fff;
+  background-color: #666;
 
-    width: 5rem;
-    height: 5rem;
-    font-size: 1.75em;
-    line-height: 5rem;
+  width: 5rem;
+  height: 5rem;
+  font-size: 1.75em;
+  line-height: 5rem;
 
-    margin: auto;
-    overflow: hidden;
-    border-radius: 2em;
-    transition: box-shadow .3s;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 2em;
+  transition: box-shadow .3s;
 }
 
 .navi-icon i{
-    display: inline-block;
-    transition: transform .3s;
+  display: inline-block;
+  transition: transform .3s;
 }
 .navi-icon:hover i{
-    transform: scale(1.3);
+  transform: scale(1.3);
 }
 
 .navi-icon img{ vertical-align: top }
 
 .navi-title{
-    text-shadow: var(--font-shadow);
-    padding: 0 .5em;
-    font-size: .875em;
-    margin-top: .75em;
+  text-shadow: var(--font-shadow);
+  padding: 0 .5em;
+  font-size: .875em;
+  margin-top: .75em;
 }
 
 @media screen and (max-width: 768px){
-    .navi-icon{
-        width: 3.75rem;
-        height: 3.75rem;
-        font-size: 1.3em;
-        line-height: 3.75rem;
-    }
+  .navi-icon{
+    width: 3.75rem;
+    height: 3.75rem;
+    font-size: 1.3em;
+    line-height: 3.75rem;
+  }
 }
 
 .navi-background{
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    z-index: -1;
-    position: fixed;
-    transition: opacity .5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  z-index: -1;
+  position: fixed;
+  transition: opacity .5s;
 }
 .navi-background.active{
-    opacity: 1;
+  opacity: 1;
 }
 
 @media screen and (prefers-color-scheme: dark){
-    /* 随机动漫壁纸需要滤镜隐藏 */
-    .navi-background.type-1{
-        mix-blend-mode: multiply;
-    }
-    /* 必应壁纸需要低透明度 */
-    .navi-background.type-2.active{
-        opacity: .2;
-    }
+  /* 随机动漫壁纸需要滤镜隐藏 */
+  .navi-background.type-1{
+    mix-blend-mode: multiply;
+  }
+  /* 必应壁纸需要低透明度 */
+  .navi-background.type-2.active{
+    opacity: .2;
+  }
 }
 
+/*
+  页尾
+*/
 footer{
-    left: 0;
-    right: 0;
-    bottom: 0;
-    text-shadow: var(--font-shadow);
-    padding: 1em 0;
-    position: fixed;
-    font-size: .875em;
-    text-align: center;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-shadow: var(--font-shadow);
+  padding: 1em 0;
+  position: fixed;
+  font-size: .875em;
+  text-align: center;
 }
 
 footer a{
-    color: inherit;
+  color: inherit;
 }
 
 @media screen and (max-width: 600px){
-    footer{
-        position: static;
-    }
+  footer{
+    position: static;
+  }
 }
 
+/*
+  弹窗和抽屉
+*/
 window{
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    z-index: 1;
-    display: flex;
-    position: fixed;
-    padding: 2em 1em;
-    pointer-events: none;
-    color: var(--font-color);
-    background: rgba(0, 0, 0, .3);
-    transition: opacity .3s;
-    backdrop-filter: blur(5px);
-    --webkit-backdrop-filter: blur(5px);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  z-index: 1;
+  display: flex;
+  position: fixed;
+  padding: 2em 1em;
+  pointer-events: none;
+  color: var(--font-color);
+  background: rgba(0, 0, 0, .3);
+  transition: opacity .3s;
+  backdrop-filter: blur(5px);
+  --webkit-backdrop-filter: blur(5px);
 }
 
 @media screen and (prefers-color-scheme: dark){
-    window{
-        background: rgba(255, 255, 255, .1);
-    }
+  window{
+    background: rgba(255, 255, 255, .1);
+  }
 }
 
 window.active{
-    opacity: 1;
-    pointer-events: auto;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .the-window{
-    margin: auto;
-    display: none;
-    min-width: 15em;
-    max-width: 40em;
-    background: #fff;
-    background: var(--input-bg);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-thick);
+  margin: auto;
+  display: none;
+  min-width: 15em;
+  max-width: 40em;
+  background: #fff;
+  background: var(--input-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-thick);
 }
 .the-window.active{
-    display: block;
-    animation: fade-small-large .3s forwards;
+  display: block;
+  animation: fade-small-large .3s forwards;
 }
 .the-window.closed{
-    animation: fade-large-small .3s forwards;
+  animation: fade-large-small .3s forwards;
 }
 
 .the-window.updated{ width: 100% }
 
 .the-window.updated details{
-    margin-top: 3em;
+  margin-top: 3em;
 }
 .the-window.updated details:first-child{
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .the-window.updated summary{
-    font-size: 1.2em;
-    font-weight: lighter;
+  font-size: 1.2em;
+  font-weight: lighter;
 }
 
 .the-window.updated details[open] summary{
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 .the-window .window-head, .the-drawer .drawer-head{
-    padding: 1em 1.5em;
-    text-align: center;
-    position: relative;
-    box-shadow: var(--shadow);
+  padding: 1em 1.5em;
+  text-align: center;
+  position: relative;
+  box-shadow: var(--shadow);
 }
 .the-window .window-head button, .the-drawer .drawer-head button{
-    top: 1rem;
-    right: 1rem;
-    position: absolute;
+  top: 1rem;
+  right: 1rem;
+  position: absolute;
 
-    border: none;
-    color: #fff;
-    padding: 0;
-    width: 1.5em;
-    cursor: pointer;
-    font-size: 1.17em;
-    border-radius: 1em;
-    background: rgb(255, 86, 86);
+  border: none;
+  color: #fff;
+  padding: 0;
+  width: 1.5em;
+  cursor: pointer;
+  font-size: 1.17em;
+  border-radius: 1em;
+  background: rgb(255, 86, 86);
 }
 
 .the-window .window-body, .the-drawer .drawer-body{
-    padding: 1.25em;
-    overflow: auto;
-    max-height: 80vh;
+  padding: 1.25em;
+  overflow: auto;
+  max-height: 80vh;
 }
 .the-window .window-body::-webkit-scrollbar,
 .the-drawer .drawer-body::-webkit-scrollbar{
-    width: 6px;
+  width: 6px;
 }
 
 .the-drawer{
-    top: 0;
-    right: 0;
-    bottom: 0;
-    position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    width: 100%;
-    max-width: 25em;
-    transform: translateX(100%);
-    transition: transform .3s;
-    background: var(--input-bg);
-    box-shadow: var(--shadow-thick);
+  width: 100%;
+  max-width: 25em;
+  transform: translateX(100%);
+  transition: transform .3s;
+  background: var(--input-bg);
+  box-shadow: var(--shadow-thick);
 }
 
 .the-drawer.active{
-    transform: translateX(0);
+  transform: translateX(0);
 }
 .the-drawer.closed{
-    transform: translateX(100%);
+  transform: translateX(100%);
 }
 
 .the-drawer .drawer-body{
-    max-height: none;
+  max-height: none;
 }
 
 .the-drawer.sites .sites{
-    gap: .5em;
-    display: grid;
-    user-select: none;
-    margin-bottom: 3em;
-    grid-template-columns: repeat(auto-fill, minmax(7em, 1fr));
+  gap: .5em;
+  display: grid;
+  user-select: none;
+  margin-bottom: 3em;
+  grid-template-columns: repeat(auto-fill, minmax(7em, 1fr));
 }
 
 .the-drawer.sites .sites span{
-    padding: .75em;
-    cursor: pointer;
-    border-radius: var(--radius);
-    background-color: rgba(0, 0, 0, .05);
-    background-color: var(--secondly-input-bg);
-    transition: transform .3s;
+  padding: .75em;
+  cursor: pointer;
+  border-radius: var(--radius);
+  background-color: rgba(0, 0, 0, .05);
+  background-color: var(--secondly-input-bg);
+  transition: transform .3s;
 }
 .the-drawer.sites .sites span:active{
-    transform: scale(.9);
+  transform: scale(.9);
 }
 
 .the-drawer.sites .sites span.active{
-    color: #fff;
-    background-color: var(--primary);
+  color: #fff;
+  background-color: var(--primary);
 }
 
 .the-drawer.sites .add-sites{
-    opacity: .6;
-    font-size: .875em;
-    text-align: center;
+  opacity: .6;
+  font-size: .875em;
+  text-align: center;
 }
