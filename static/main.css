@@ -366,6 +366,9 @@ window{
   color: var(--font-color);
   background: rgba(0, 0, 0, .3);
   transition: opacity .3s;
+}
+
+body:not(.low-animate) window{
   backdrop-filter: blur(5px);
   --webkit-backdrop-filter: blur(5px);
 }
@@ -393,10 +396,22 @@ window.active{
 }
 .the-window.active{
   display: block;
+}
+
+.the-window.started{
   animation: fade-small-large .3s forwards;
 }
+
 .the-window.closed{
   animation: fade-large-small .3s forwards;
+}
+
+/* 减淡动画 */
+body.low-animate .the-window.started{
+  animation-name: fade-in;
+}
+body.low-animate .the-window.closed{
+  animation-name: fade-out;
 }
 
 .the-window.updated{ width: 100% }
@@ -418,6 +433,7 @@ window.active{
 }
 
 .the-window .window-head, .the-drawer .drawer-head{
+  user-select: none;
   padding: 1em 1.5em;
   text-align: center;
   position: relative;
@@ -460,7 +476,7 @@ window.active{
   width: 100%;
   max-width: 25em;
   transform: translateX(100%);
-  transition: transform .3s;
+  transition: opacity .3s, transform .3s, visibility .3s;
   background: var(--input-bg);
   box-shadow: var(--shadow-thick);
 }
@@ -470,6 +486,17 @@ window.active{
 }
 .the-drawer.closed{
   transform: translateX(100%);
+}
+
+/* 减淡动画 */
+body.low-animate .the-drawer{
+  opacity: 0;
+  transform: none;
+  visibility: hidden;
+}
+body.low-animate .the-drawer.active{
+  opacity: 1;
+  visibility: visible;
 }
 
 .the-drawer .drawer-body{

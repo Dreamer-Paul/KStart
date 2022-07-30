@@ -34,7 +34,8 @@ function KStart() {
       search: ks.select("[name=search]"),
       background: ks.select("[name=background]"),
       sites: ks.select("[name=sites]"),
-      auto_focus: ks.select("[name=auto_focus]")
+      auto_focus: ks.select("[name=auto_focus]"),
+      low_animate: ks.select("[name=low_animate]")
     },
     settingBtn: {
       reset: ks.select("#set-reset"),
@@ -115,6 +116,7 @@ function KStart() {
       search: 0,
       background: 0,
       auto_focus: false,
+      low_animate: false,
       sites: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 16, 28, 31, 35],
       custom: [],
     },
@@ -180,23 +182,35 @@ function KStart() {
     // 弹窗和抽屉
     openWindow: (key) => {
       data.window = key;
+
       obj.window.wrap.classList.add("active");
       obj.window.item[key].classList.add("active");
-    },
-    closeWindowStart: () => {
-      if (!data.timer) {
-        data.timer = setTimeout(methods.closeWindowEnd, 300);
-      }
+      obj.window.item[key].classList.add("started");
 
+      // 上次操作可能被取消，强制清除
+      obj.window.item[key].classList.remove("closed");
+
+      data.timer = clearTimeout(data.timer);
+      data.timer = setTimeout(methods.openWindowEnd, 300);
+    },
+    openWindowEnd: () => {
+      obj.window.item[data.window].classList.remove("started");
+    },
+    closeWindow: () => {
       obj.window.wrap.classList.remove("active");
       obj.window.item[data.window].classList.add("closed");
+
+      // 上次操作可能被取消，强制清除
+      obj.window.item[data.window].classList.remove("started");
+
+      data.timer = clearTimeout(data.timer);
+      data.timer = setTimeout(methods.closeWindowEnd, 300);
     },
     closeWindowEnd: () => {
-      data.timer = clearTimeout(methods.closeWindowEnd);
+      data.timer = clearTimeout(data.timer);
 
       obj.window.item[data.window].classList.remove("closed");
       obj.window.item[data.window].classList.remove("active");
-
       obj.window.wrap.classList.remove("active");
     },
 
@@ -408,6 +422,15 @@ function KStart() {
     focusSearchInput: () => {
       obj.main.input.focus();
     },
+    // 减淡动画
+    initLowAnimate: () => {
+      if (data.user_set.low_animate) {
+        document.body.classList.add("low-animate");
+      }
+      else {
+        document.body.classList.remove("low-animate");
+      }
+    },
 
     // 设置项被修改
     onSettingChange: (name) => {
@@ -416,6 +439,9 @@ function KStart() {
       }
       else if (name === "search") {
         ks.notice("默认搜索引擎已修改，刷新后生效", { color: "green", time: 3000 });
+      }
+      else if (name === "low_animate") {
+        modifys.initLowAnimate();
       }
     },
 
@@ -449,7 +475,7 @@ function KStart() {
         const isCloseBtn = e.target.nodeName === "BUTTON" && e.target.dataset.type === "close";
         const isWindow = e.target == obj.window.wrap;
 
-        (isWindow || isCloseBtn) && methods.closeWindowStart();
+        (isWindow || isCloseBtn) && methods.closeWindow();
       };
 
       // 重置按钮
@@ -607,6 +633,7 @@ function KStart() {
 
     modifys.initNavi();
     modifys.initBackground();
+    modifys.initLowAnimate();
 
     data.env === "web" && modifys.hideModifiedButton();
 
