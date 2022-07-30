@@ -214,8 +214,13 @@ function KStart() {
       obj.window.wrap.classList.remove("active");
     },
 
-    // 数字字符串转数字
-    parseValue: (value) => {
+    // 输入 Value 处理
+    parseValue: (type, value) => {
+      // Checkbox 直接返回 boolean
+      if (type === "checked") {
+        return value;
+      }
+
       const _checkNumber = Number(value);
 
       return isNaN(_checkNumber) ? value : _checkNumber;
@@ -548,7 +553,7 @@ function KStart() {
           obj.settings[item][type] = set[item];
 
           obj.settings[item].onchange = (ev) => {
-            data.user_set[i] = methods.parseValue(ev.target[type]);
+            data.user_set[i] = methods.parseValue(type, ev.target[type]);
 
             methods.setStorage();
             modifys.onSettingChange(i);
@@ -561,7 +566,7 @@ function KStart() {
 
           obj.settings[item].onchange = () => {
             // 读取表单
-            data.user_set[i] = methods.parseValue(methods.getMulSelectValue(obj.settings[i]));
+            data.user_set[i] = methods.parseValue(type, methods.getMulSelectValue(obj.settings[i]));
 
             methods.setStorage();
             modifys.onSettingChange(i);
