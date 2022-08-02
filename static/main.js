@@ -112,11 +112,22 @@ function KStart() {
         url: "https://duckduckgo.com/?q=%s",
       },
     ],
+    motion_reduced_enum: [
+      {
+        name: "自适应",
+      },
+      {
+        name: "开启",
+      },
+      {
+        name: "关闭",
+      },
+    ],
     user_set: {
       search: 0,
       background: 0,
       auto_focus: false,
-      low_animate: false,
+      low_animate: 0,
       sites: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 16, 28, 31, 35],
       custom: [],
     },
@@ -230,7 +241,7 @@ function KStart() {
     getMulSelectValue: (el) => {
       let selected = [];
 
-      for(const item of el){
+      for (const item of el) {
         item.selected && selected.push(parseInt(item.value));
       }
 
@@ -238,7 +249,7 @@ function KStart() {
     },
     // 读取数组转表单
     setMulSelectValue: (el, value) => {
-      for(const item of value){
+      for (const item of value) {
         el[item].selected = true;
       }
     },
@@ -316,7 +327,7 @@ function KStart() {
       obj.settingBtn.file.click();
     },
     outputButton: () => {
-      const blob = new Blob([ JSON.stringify(data.user_set, null, 2) ], { type: "application/json" });
+      const blob = new Blob([JSON.stringify(data.user_set, null, 2)], { type: "application/json" });
 
       obj._internal.link.href = URL.createObjectURL(blob);
       obj._internal.link.download = `userset-${parseInt(new Date().getTime() / 1000)}.json`;
@@ -327,18 +338,18 @@ function KStart() {
     fileInputChange: (e) => {
       const file = e.target.files && e.target.files[0];
 
-      if(!file){
+      if (!file) {
         console.log("🔮 也许是不存在的操作？");
         return;
       }
 
-      if(file.type !== "application/json"){
+      if (file.type !== "application/json") {
         ks.notice("导入的文件必须是 JSON 格式", { color: "red", time: 3000 });
         return;
       }
 
       file.text().then((text) => {
-        try{
+        try {
           const json = JSON.parse(text);
 
           data.user_set = json;
@@ -346,7 +357,7 @@ function KStart() {
 
           ks.notice("导入成功，刷新页面后生效！", { color: "green", time: 5000 });
         }
-        catch(e){
+        catch (e) {
           ks.notice("JSON 文件格式错误，请检查", { color: "red", time: 3000 });
           return;
         }
@@ -386,7 +397,7 @@ function KStart() {
     changeSearch: (key) => {
       data.user_set.search = key;
 
-      if(data.search_method[key].icon){
+      if (data.search_method[key].icon) {
         obj.main.select.innerHTML = `<i class="iconfont icon-${data.search_method[key].icon}"></i>`
       }
     },
@@ -427,13 +438,48 @@ function KStart() {
     focusSearchInput: () => {
       obj.main.input.focus();
     },
+    // 初始化媒体查询事件监听
+    initMediaQueryListener: () => {
+      // prefers-reduced-motion 事件监听
+      window.matchMedia("(prefers-reduced-motion: reduce)").addListener((e) => {
+        // 当 data.user_set.low_animate 不为 0(自适应) 时，不进行处理
+        if(data.user_set.low_animate !== 0) return;
+
+        if (e.matches) {
+          document.body.classList.add("low-animate");
+          ks.notice("检测到减弱动画模式，已为你减弱动画效果", { color: "green", time: 2000 });
+        }
+        else {
+          document.body.classList.remove("low-animate");
+          ks.notice("减弱动画模式关闭，已启用完整动画效果", { color: "green", time: 2000 });
+        }
+      });
+    },
     // 减淡动画
     initLowAnimate: () => {
-      if (data.user_set.low_animate) {
-        document.body.classList.add("low-animate");
+      // 兼容性处理：对旧配置中 boolean 类型的配置项进行转换
+      if (data.user_set.low_animate === true) {
+        data.user_set.low_animate = 1;
       }
-      else {
-        document.body.classList.remove("low-animate");
+      else if (data.user_set.low_animate === false) {
+        data.user_set.low_animate = 2;
+      }
+
+      switch (data.user_set.low_animate) {
+        case 1:
+          // 开启
+          document.body.classList.add("low-animate");
+          break;
+        case 2:
+          // 关闭
+          document.body.classList.remove("low-animate");
+          break;
+        default:
+          // 自适应
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? document.body.classList.add("low-animate")
+            : document.body.classList.remove("low-animate");
+          break;
       }
     },
 
@@ -490,7 +536,7 @@ function KStart() {
       obj.settingBtn.file.onchange = modifys.fileInputChange;
 
       // 版本更新提示
-      if(localStorage.getItem("paul-ver") !== data.ver){
+      if (localStorage.getItem("paul-ver") !== data.ver) {
         obj.header.updated.classList.add("active");
       }
     },
@@ -505,7 +551,7 @@ function KStart() {
           obj.main.sites.appendChild(methods.createNaviItem(item));
         });
       }
-  
+
       // 用户选中的预设站点
       if (sites && Array.isArray(sites)) {
         sites.forEach((item) => {
@@ -638,6 +684,7 @@ function KStart() {
 
     modifys.initNavi();
     modifys.initBackground();
+    modifys.initMediaQueryListener();
     modifys.initLowAnimate();
 
     data.env === "web" && modifys.hideModifiedButton();
