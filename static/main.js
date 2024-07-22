@@ -107,6 +107,11 @@ function KStart() {
         url: "https://www.sogou.com/web?query=%s",
       },
       {
+        name: "Felo",
+        icon: "felo-search",
+        url: "https://felo.ai/?q=%s",
+      },
+      {
         name: "DuckDuckGo",
         icon: "duckduckgo",
         url: "https://duckduckgo.com/?q=%s",
@@ -396,6 +401,8 @@ function KStart() {
     // 修改搜索方式
     changeSearch: (key) => {
       data.user_set.search = key;
+
+      obj.main.input.placeholder = `使用 ${data.search_method[key].name} 搜索`;
 
       if (data.search_method[key].icon) {
         obj.main.select.innerHTML = `<i class="iconfont icon-${data.search_method[key].icon}"></i>`
