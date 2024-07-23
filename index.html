@@ -107,7 +107,8 @@
             <article>
                 <p><img src="static/about.jpg" alt="关于奇趣起始页"></p>
                 <p>欢迎使用奇趣起始页！本项目建设于 2020/5/9，是一个主打社区形式维护的开源项目。几乎采用原生（JS/CSS）技术实现，性能扛扛的！</p>
-                <p>它的使用方式很简单，只需要在 <a href="https://github.com/Dreamer-Paul/KStart-Sites" target="_blank">本项目的仓库</a> 上提交 PR，即可创造一个属于自己的导航页面。访问它只需要一个 <a href="https://s.paul.ren/?u=paul" target="_blank">URL 后缀</a> 即可直达，无需注册和登录，非常方便易用。</p>
+                <p>本站默认<b>不保存任何私人数据</b>，因此不必担心你的<b>个人隐私被他人所查阅</b>。当然，你也可以选择编辑并共享它们。</p>
+                <p>只需要在 <a href="https://github.com/Dreamer-Paul/KStart-Sites" target="_blank">本项目的仓库</a> 上提交 PR，即可创造一个属于自己的导航页面。访问它只需要一个 <a href="https://s.paul.ren/?u=paul" target="_blank">URL 后缀</a> 即可直达，无需注册和登录，非常方便易用。</p>
                 <p>现有的类似站点已经很多了，为什么我仍然选择编写了这个项目？这是因为它们都是「<b>闭源的私人项目</b>」，只有作者本人才可以进行维护。</p>
                 <p>与此同时，这些站点的导航项大多已经预设。想要修改它们，要么需要注册后修改，要么就干脆不给改，个人觉得略显鸡肋。如果你更换了电脑，不就需要重新登录了吗？</p>
                 <p>本项目与众不同的地方则是采用了 GitHub 托管的形式，属于“无后端”项目，于是一些看似可以提升用户体验的功能，我暂时没有考虑去实现它。如果你有些好的建议，不妨在项目的 <a href="https://github.com/Dreamer-Paul/KStart/issues" target="_blank">Issues</a> 区进行留言？</p>
@@ -115,7 +116,6 @@
                 <ul>
                     <li><a href="https://xiaoshu.app" target="_blank" rel="nofollow">小舒同学</a></li>
                     <li><a href="https://limestart.cn" target="_blank" rel="nofollow">青柠起始页</a></li>
-                    <li><a href="https://yubius.com" target="_blank" rel="nofollow">布斯起始页（本项目的二改）</a></li>
                 </ul>
                 <h3>使用了开源项目：</h3>
                 <ul>
@@ -124,8 +124,12 @@
                 </ul>
                 <h3>使用了第三方服务：</h3>
                 <ul>
-                    <li><a href="https://www.iconfont.cn" target="_blank" rel="nofollow">IconFont</a></li>
-                    <li><a href="https://api.paugram.com" target="_blank">保罗 API</a>（随机动漫壁纸、必应壁纸解析）</li>
+                    <li><a href="https://www.iconfont.cn" target="_blank" rel="nofollow">IconFont</a>（图标托管）</li>
+                    <li><a href="https://api.paugram.com" target="_blank">保罗 API</a>（随机动漫壁纸、必应壁纸解析）
+                        <ul>
+                            <li>其中 <a href="https://github.com/Dreamer-Paul/Anime-Wallpaper" target="_blank">随机动漫壁纸</a> 部分是公开仓库，欢迎你的投稿</li>
+                        </ul>
+                    </li>
                 </ul>
             </article>
         </div>
@@ -144,6 +148,8 @@
                 <label>
                     <span>自定义背景：</span>
                     <select name="background" data-key="background_type"></select>
+                    <span class="custom-background-preview" hidden></span>
+                    <input type="file" id="custom-background-input" hidden />
                 </label>
                 <label>
                     <span>减淡动画和视觉效果：</span>

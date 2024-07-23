@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2022.5.27
+# Last Update: 2024.7.24
 
 一个简洁轻巧的起始页
 
@@ -50,6 +50,10 @@
   blockquote{
     background-color: var(--secondly-input-bg);
   }
+}
+
+[hidden]{
+  display: none !important;
 }
 
 html, body{
@@ -462,6 +466,17 @@ body.low-animate .the-window.closed{
 .the-window .window-body::-webkit-scrollbar,
 .the-drawer .drawer-body::-webkit-scrollbar{
   width: 6px;
+}
+
+/* 自选本地图片 */
+.custom-background-preview {
+  height: 8em;
+  cursor: copy;
+  display: block;
+  margin-top: 1em;
+  border-radius: var(--radius);
+  background: center/cover no-repeat;
+  border: var(--border-width) var(--gray) solid;
 }
 
 .the-drawer{

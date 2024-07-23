@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2022.5.28
+# Last Update: 2024.7.24
 
 一个简洁轻巧的起始页
 
@@ -33,6 +33,8 @@ function KStart() {
     settings: {
       search: ks.select("[name=search]"),
       background: ks.select("[name=background]"),
+      background_preview: ks.select(".custom-background-preview"),
+      background_input: ks.select("#custom-background-input"),
       sites: ks.select("[name=sites]"),
       auto_focus: ks.select("[name=auto_focus]"),
       low_animate: ks.select("[name=low_animate]")
@@ -60,6 +62,8 @@ function KStart() {
     timer: "",
     window: 0,
     sites: [],
+    db: undefined,
+    custom_background: undefined,
     background_type: [
       {
         name: "无背景",
@@ -78,7 +82,11 @@ function KStart() {
         name: "Unsplash 随机图片",
         url: "https://source.unsplash.com/random/1920x1080",
         set: "center/cover no-repeat",
-      }
+      },
+      {
+        name: "自选本地图片",
+        set: "center/cover no-repeat",
+      },
     ],
     search_method: [
       {
@@ -140,6 +148,50 @@ function KStart() {
 
   // 各种方法
   const methods = {
+    // DB 相关
+    initDB: () => {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open("wallpaper", 1);
+  
+        request.onerror = (e) => {
+          reject();
+          console.error("Database error:", e.target.errorCode);
+        };
+  
+        request.onsuccess = (e) => {
+          data.db = e.target.result;
+          resolve();
+        };
+  
+        request.onupgradeneeded = (e) => {
+          data.db = e.target.result;
+          data.db.createObjectStore("images", { keyPath: "id" });
+        };
+      })
+    },
+    getCustomWallpaper: () => (
+      new Promise((resolve, reject) => {
+        if (data.custom_background) {
+          resolve(data.custom_background);
+        }
+  
+        const transaction = data.db.transaction(["images"], "readonly");
+        const objectStore = transaction.objectStore("images");
+        const getRequest = objectStore.get(1);
+  
+        getRequest.onsuccess = () => {
+          if (getRequest.result) {
+            data.custom_background = getRequest.result.data;
+            resolve(getRequest.result.data);
+          }
+        };
+
+        getRequest.onerror = () => {
+          reject(new Error(transaction.error));
+        }
+      })
+    ),
+
     // 存储相关
     getStorage: () => {
       const storage = localStorage.getItem("paul-userset");
@@ -409,7 +461,7 @@ function KStart() {
       }
     },
     // 初始化背景和深色背景模式检测
-    initBackground: () => {
+    initBackground: async () => {
       if (data.user_set.background == 0) {
         obj.main.bg.style = "";
 
@@ -418,7 +470,16 @@ function KStart() {
 
       const img = new Image();
       img.crossOrigin = "Anonymous";
-      img.src = data.background_type[data.user_set.background].url;
+
+      const { url } = data.background_type[data.user_set.background];
+
+      // 自定义图片
+      if (data.user_set.background == 4) {
+        img.src = await methods.getCustomWallpaper();
+      }
+      else {
+        img.src = url;
+      }
 
       // 深色背景增加深色模式
       img.onload = () => {
@@ -441,6 +502,32 @@ function KStart() {
         }
       };
     },
+
+    // 上传了新的背景图片
+    customWallpaperInputChange: (e) => {
+      const file = e.target.files[0];
+
+      if (file && file.type.startsWith("image/")) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+          const imageDataUrl = e.target.result;
+          const transaction = data.db.transaction(["images"], "readwrite");
+          const objectStore = transaction.objectStore("images");
+          objectStore.put({ id: 1, data: imageDataUrl });
+
+          data.custom_background = imageDataUrl;
+          obj.settings.background_preview.style.backgroundImage = `url(${imageDataUrl})`;
+
+          modifys.initBackground();
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        ks.notice("请选择有效的图片文件", { color: "red", time: 3000 });
+      }
+    },
+
     // 自动聚焦到搜索框
     focusSearchInput: () => {
       obj.main.input.focus();
@@ -570,12 +657,44 @@ function KStart() {
       }
     },
 
+    // 初始化自定义背景相关逻辑
+    initSettingBackground: () => {
+      // 预览自定义图片
+      methods.getCustomWallpaper().then((imgUrl) => {
+        obj.settings.background_preview.style.backgroundImage = `url(${imgUrl})`;
+
+        if (data.user_set.background === 4) {
+          obj.settings.background_preview.hidden = false;
+        }
+      });
+
+      obj.settings.background_preview.addEventListener("click", () => {
+        obj.settings.background_input.click();
+      });
+
+      // 如果修改成自定义背景
+      obj.settings.background.addEventListener("change", (ev) => {
+        obj.settings.background_preview.hidden = ev.target.value != 4;
+      });
+
+      // 如果自定义背景被修改
+      obj.settings.background_input.onchange = modifys.customWallpaperInputChange;
+    },
+
     // 初始化设置表单项
     initSettingForm: () => {
       const set = data.user_set;
 
+      const inputElements = ["INPUT", "SELECT", "TEXTAREA"];
+
       for (item in set) {
-        if (!obj.settings[item]) return;
+        if (!obj.settings[item]) {
+          return;
+        }
+
+        if (!inputElements.includes(obj.settings[item].nodeName)) {
+          return;
+        }
 
         let type, i = item;
 
@@ -688,7 +807,7 @@ function KStart() {
     return methods.getStorage();
   }).then((userData) => {
     userData && methods.setUserSettings(userData);
-
+  }).then(methods.initDB).then(() => {
     modifys.initNavi();
     modifys.initBackground();
     modifys.initMediaQueryListener();
@@ -699,6 +818,7 @@ function KStart() {
     data.user_set.auto_focus && modifys.focusSearchInput();
 
     modifys.changeSearch(data.user_set.search);
+    modifys.initSettingBackground();
     modifys.initSettingForm();
     modifys.initDrawerItems();
   });
