@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2024.7.24
+# Last Update: 2024.7.29
 
 一个简洁轻巧的起始页
 
@@ -35,6 +35,7 @@
     background-color: #222;
 
     --gray: #555;
+    --lighter-gray: #333;
     --shadow: 0 0 5em rgba(255, 255, 255, .1);
     --shadow-thin: 0 0 1em rgba(255, 255, 255, .3);
     --shadow-thick: 0 0 5em rgba(255, 255, 255, .2);
@@ -472,11 +473,26 @@ body.low-animate .the-window.closed{
 .custom-background-preview {
   height: 8em;
   cursor: copy;
-  display: block;
+  display: flex;
   margin-top: 1em;
+  overflow: hidden;
+  text-align: center;
   border-radius: var(--radius);
-  background: center/cover no-repeat;
+  background: rgba(0, 0, 0, .05) center/cover no-repeat;
   border: var(--border-width) var(--gray) solid;
+}
+.custom-background-preview::before {
+  width: 100%;
+  opacity: 0;
+  display: block;
+  font-size: 1.2em;
+  line-height: 8rem;
+  content: attr(aria-label);
+  background-color: var(--input-bg);
+  transition: opacity .3s;
+}
+.custom-background-preview:not([style])::before, .custom-background-preview:hover::before {
+  opacity: .6;
 }
 
 .the-drawer{

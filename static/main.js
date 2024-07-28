@@ -2,7 +2,7 @@
 
 # KStart
 # By: Dreamer-Paul
-# Last Update: 2024.7.24
+# Last Update: 2024.7.29
 
 一个简洁轻巧的起始页
 
@@ -152,17 +152,17 @@ function KStart() {
     initDB: () => {
       return new Promise((resolve, reject) => {
         const request = indexedDB.open("wallpaper", 1);
-  
+
         request.onerror = (e) => {
           reject();
           console.error("Database error:", e.target.errorCode);
         };
-  
+
         request.onsuccess = (e) => {
           data.db = e.target.result;
           resolve();
         };
-  
+
         request.onupgradeneeded = (e) => {
           data.db = e.target.result;
           data.db.createObjectStore("images", { keyPath: "id" });
@@ -174,11 +174,11 @@ function KStart() {
         if (data.custom_background) {
           resolve(data.custom_background);
         }
-  
+
         const transaction = data.db.transaction(["images"], "readonly");
         const objectStore = transaction.objectStore("images");
         const getRequest = objectStore.get(1);
-  
+
         getRequest.onsuccess = () => {
           if (getRequest.result) {
             data.custom_background = getRequest.result.data;
@@ -779,24 +779,36 @@ function KStart() {
     }
   };
 
+  // 异步数据请求
+  const services = {
+    getSiteList: () => (
+      fetch("site.json").then((res) => res.json())
+    ),
+    getUserSettings: (user) => {
+      const url = `https://dreamer-paul.github.io/KStart-Sites/${user}.json`;
+
+      return fetch(url).then((res) => res.json());
+    },
+  };
+
+  // 从这里开始初始化
   modifys.initBody();
 
-  // 初始化，先获取预设站点数据
-  fetch("site.json").then((res) => res.json()).then((res) => {
+  services.getSiteList().then((res) => {
     data.sites = res;
   }).then(() => {
     const user = methods.getUser();
 
     // 读取在线或本地数据
     if (user) {
-      const url = `https://dreamer-paul.github.io/KStart-Sites/${user}.json`;
+      return services.getUserSettings(user).then((res) => {
+        data.env = "web";
 
-      console.warn("Web mode");
-      data.env = "web";
-
-      return fetch(url).then((res) => res.json()).catch(err => {
+        return res;
+      }).catch((err) => {
         data.env = "local";
         ks.notice("获取数据出错啦", { color: "red" });
+
         return methods.getStorage();
       });
     }
