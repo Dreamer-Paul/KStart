@@ -32,7 +32,7 @@
 @media screen and (prefers-color-scheme: dark){
   :root{
     color: #ccc;
-    background-color: #222;
+    background-color: #000;
 
     --gray: #555;
     --lighter-gray: #333;
@@ -142,10 +142,23 @@ header .action-btn.updated.active .fa{
   内容
 */
 main{
+  opacity: 0;
   width: 100%;
   margin: auto;
   padding: 5em 1.75em;
   max-width: 60em;
+  transition: opacity .3s;
+}
+main.layout-default {
+  opacity: 1;
+}
+main.layout-simple {
+  opacity: 1;
+  max-width: 40em;
+  margin-top: 10em;
+}
+main.layout-simple .navi-items {
+  display: none;
 }
 
 .input-box{
@@ -376,12 +389,6 @@ window{
 body:not(.low-animate) window{
   backdrop-filter: blur(5px);
   --webkit-backdrop-filter: blur(5px);
-}
-
-@media screen and (prefers-color-scheme: dark){
-  window{
-    background: rgba(255, 255, 255, .1);
-  }
 }
 
 window.active{

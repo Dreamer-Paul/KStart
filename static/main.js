@@ -19,6 +19,7 @@ function KStart() {
       setting: ks.select(".action-btn.setting"),
     },
     main: {
+      self: ks.select("main"),
       select: ks.select(".search-select"),
       search: ks.select(".search-selector"),
       input: ks.select(".input-box input"),
@@ -31,6 +32,7 @@ function KStart() {
       item: ks(".the-window, .the-drawer"),
     },
     settings: {
+      layout: ks.select("[name=layout]"),
       search: ks.select("[name=search]"),
       background: ks.select("[name=background]"),
       background_preview: ks.select(".custom-background-preview"),
@@ -64,6 +66,14 @@ function KStart() {
     sites: [],
     db: undefined,
     custom_background: undefined,
+    layout: [
+      {
+        name: "默认",
+      },
+      {
+        name: "仅搜索框",
+      },
+    ],
     background_type: [
       {
         name: "无背景",
@@ -137,6 +147,7 @@ function KStart() {
       },
     ],
     user_set: {
+      layout: 0,
       search: 0,
       background: 0,
       auto_focus: false,
@@ -579,6 +590,9 @@ function KStart() {
 
     // 设置项被修改
     onSettingChange: (name) => {
+      if (name === "layout") {
+        modifys.initLayout();
+      }
       if (name === "background") {
         modifys.initBackground();
       }
@@ -632,6 +646,20 @@ function KStart() {
       // 版本更新提示
       if (localStorage.getItem("paul-ver") !== data.ver) {
         obj.header.updated.classList.add("active");
+      }
+    },
+
+    // 初始化布局
+    initLayout: () => {
+      const { layout } = data.user_set;
+
+      obj.main.self.className = "";
+
+      if (layout === 0) {
+        obj.main.self.classList.add("layout-default");
+      }
+      else if (layout === 1) {
+        obj.main.self.classList.add("layout-simple");
       }
     },
 
@@ -820,6 +848,7 @@ function KStart() {
   }).then((userData) => {
     userData && methods.setUserSettings(userData);
   }).then(methods.initDB).then(() => {
+    modifys.initLayout();
     modifys.initNavi();
     modifys.initBackground();
     modifys.initMediaQueryListener();
